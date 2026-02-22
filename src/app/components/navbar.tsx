@@ -10,7 +10,11 @@ const navLinks = [
   { label: "About", href: "#about" },
 ];
 
-export function Navbar() {
+interface NavbarProps {
+  onOpenInquiry: () => void;
+}
+
+export function Navbar({ onOpenInquiry }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -65,7 +69,7 @@ export function Navbar() {
                   boxShadow: "0 0 30px rgba(0, 229, 255, 0.5)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => document.getElementById("cta")?.scrollIntoView({ behavior: "smooth" })}
+                onClick={onOpenInquiry}
               >
                 Get Started
               </motion.button>
@@ -117,7 +121,7 @@ export function Navbar() {
                 whileTap={{ scale: 0.95 }}
                 onClick={() => {
                   setIsOpen(false);
-                  document.getElementById("cta")?.scrollIntoView({ behavior: "smooth" });
+                  onOpenInquiry();
                 }}
               >
                 Get Started

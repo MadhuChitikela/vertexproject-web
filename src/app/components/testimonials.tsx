@@ -41,14 +41,14 @@ export function Testimonials() {
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           <h2
-            className="text-5xl md:text-6xl mb-4"
+            className="text-4xl sm:text-5xl md:text-6xl mb-4"
             style={{
               background: "linear-gradient(135deg, #ffffff 0%, #7C3AED 100%)",
               WebkitBackgroundClip: "text",
@@ -59,13 +59,13 @@ export function Testimonials() {
           >
             What Our Clients Say
           </h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto">
             Real feedback from students who achieved success with our projects
           </p>
         </motion.div>
 
         {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.name}
@@ -75,7 +75,7 @@ export function Testimonials() {
               transition={{ duration: 0.6, delay: index * 0.15 }}
             >
               <motion.div
-                className="group relative h-full p-8 rounded-2xl backdrop-blur-xl border border-white/10"
+                className="group relative h-full p-6 md:p-8 rounded-2xl backdrop-blur-xl border border-white/10"
                 style={{
                   background: "linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))",
                 }}
@@ -92,14 +92,14 @@ export function Testimonials() {
                 <div className="relative z-10 space-y-6">
                   {/* Quote Icon */}
                   <motion.div
-                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    className="w-10 h-10 md:w-12 md:h-12 rounded-lg flex items-center justify-center"
                     style={{
                       background: "linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(124, 58, 237, 0.2))",
                     }}
                     whileHover={{ rotate: 180 }}
                     transition={{ duration: 0.5 }}
                   >
-                    <Quote className="w-6 h-6 text-[#00E5FF]" />
+                    <Quote className="w-5 h-5 md:w-6 md:h-6 text-[#00E5FF]" />
                   </motion.div>
 
                   {/* Rating */}
@@ -112,13 +112,13 @@ export function Testimonials() {
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.15 + i * 0.1 }}
                       >
-                        <Star className="w-5 h-5 fill-[#00E5FF] text-[#00E5FF]" />
+                        <Star className="w-4 h-4 md:w-5 md:h-5 fill-[#00E5FF] text-[#00E5FF]" />
                       </motion.div>
                     ))}
                   </div>
 
                   {/* Testimonial Text */}
-                  <p className="text-white/80 leading-relaxed text-lg">
+                  <p className="text-white/80 leading-relaxed text-base md:text-lg">
                     "{testimonial.text}"
                   </p>
 
@@ -126,7 +126,7 @@ export function Testimonials() {
                   <div className="flex items-center gap-4 pt-4 border-t border-white/10">
                     {/* Avatar */}
                     <div
-                      className="w-12 h-12 rounded-full flex items-center justify-center text-white"
+                      className="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-sm md:text-base text-white"
                       style={{
                         background: "linear-gradient(135deg, #00E5FF, #7C3AED)",
                         fontWeight: 700,
@@ -137,10 +137,10 @@ export function Testimonials() {
 
                     {/* Info */}
                     <div>
-                      <div className="text-white" style={{ fontWeight: 700 }}>
+                      <div className="text-sm md:text-base text-white" style={{ fontWeight: 700 }}>
                         {testimonial.name}
                       </div>
-                      <div className="text-sm text-white/60">{testimonial.role}</div>
+                      <div className="text-xs md:text-sm text-white/60">{testimonial.role}</div>
                     </div>
                   </div>
                 </div>
@@ -159,7 +159,7 @@ export function Testimonials() {
 
         {/* Trust Badges */}
         <motion.div
-          className="mt-16 flex flex-wrap justify-center gap-8 items-center"
+          className="mt-12 md:mt-16 flex flex-col sm:flex-row flex-wrap justify-center gap-4 md:gap-8 items-stretch sm:items-center"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -172,7 +172,7 @@ export function Testimonials() {
           ].map((badge, index) => (
             <motion.div
               key={badge.label}
-              className="px-6 py-4 rounded-xl backdrop-blur-sm border border-white/10"
+              className="px-6 py-4 rounded-xl backdrop-blur-sm border border-white/10 flex-1 sm:flex-none"
               style={{
                 background: "linear-gradient(135deg, rgba(0, 229, 255, 0.05), rgba(124, 58, 237, 0.05))",
               }}
@@ -180,7 +180,7 @@ export function Testimonials() {
             >
               <div className="text-center">
                 <div
-                  className="text-2xl mb-1"
+                  className="text-xl md:text-2xl mb-1"
                   style={{
                     background: "linear-gradient(135deg, #00E5FF, #7C3AED)",
                     WebkitBackgroundClip: "text",
@@ -191,7 +191,7 @@ export function Testimonials() {
                 >
                   {badge.value}
                 </div>
-                <div className="text-sm text-white/60">{badge.label}</div>
+                <div className="text-xs md:text-sm text-white/60">{badge.label}</div>
               </div>
             </motion.div>
           ))}

@@ -57,14 +57,14 @@ export function WhyChooseUs() {
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
           <h2
-            className="text-5xl md:text-6xl mb-4"
+            className="text-4xl sm:text-5xl md:text-6xl mb-4"
             style={{
               background: "linear-gradient(135deg, #ffffff 0%, #7C3AED 100%)",
               WebkitBackgroundClip: "text",
@@ -75,7 +75,7 @@ export function WhyChooseUs() {
           >
             Why Choose Us
           </h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto">
             We deliver excellence through innovation, quality, and dedicated support
           </p>
         </motion.div>

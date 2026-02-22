@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Logo } from "./logo";
-import { Github, Linkedin, Twitter, Instagram, Mail, Phone, MapPin } from "lucide-react";
+import { Github, Linkedin, Twitter, Instagram, Mail, Phone, MapPin, MessageSquare } from "lucide-react";
 
 const footerLinks = {
   Services: ["IEEE Projects", "Custom Software", "AI/ML Solutions", "Web Development", "Mobile Apps"],
@@ -93,25 +93,25 @@ export function Footer() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="flex items-center gap-3">
               <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center"
+                className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
                 style={{
                   background: "linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(124, 58, 237, 0.2))",
                 }}
               >
                 <Mail className="w-5 h-5 text-[#00E5FF]" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <div className="text-xs text-white/50">Email Us</div>
-                <a href="mailto:vertexproject.in@gmail.com" className="text-sm text-white hover:text-[#00E5FF] transition-colors">vertexproject.in@gmail.com</a>
+                <a href="mailto:vertexproject.in@gmail.com" className="text-sm text-white hover:text-[#00E5FF] transition-colors truncate block">vertexproject.in@gmail.com</a>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center"
+                className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
                 style={{
                   background: "linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(124, 58, 237, 0.2))",
                 }}
@@ -126,7 +126,22 @@ export function Footer() {
 
             <div className="flex items-center gap-3">
               <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center"
+                className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
+                style={{
+                  background: "linear-gradient(135deg, rgba(37, 211, 102, 0.2), rgba(37, 211, 102, 0.1))",
+                }}
+              >
+                <MessageSquare className="w-5 h-5 text-[#25D366]" />
+              </div>
+              <div>
+                <div className="text-xs text-white/50">WhatsApp</div>
+                <a href="https://wa.me/919391189053" target="_blank" rel="noopener noreferrer" className="text-sm text-white hover:text-[#00E5FF] transition-colors">+91 93911 89053</a>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div
+                className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
                 style={{
                   background: "linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(124, 58, 237, 0.2))",
                 }}

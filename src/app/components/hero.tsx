@@ -2,7 +2,11 @@ import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { FloatingGeometry } from "./floating-geometry";
 
-export function Hero() {
+interface HeroProps {
+  onOpenInquiry: () => void;
+}
+
+export function Hero({ onOpenInquiry }: HeroProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-6 py-20">
       {/* Gradient Overlays */}
@@ -22,10 +26,10 @@ export function Hero() {
         }}
       />
 
-      <div className="relative z-10 max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center">
+      <div className="relative z-10 max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center">
         {/* Left Content */}
         <motion.div
-          className="space-y-8"
+          className="space-y-6 md:space-y-8 text-center lg:text-left"
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
@@ -47,7 +51,7 @@ export function Hero() {
           {/* Main Heading */}
           <div className="space-y-4">
             <motion.h1
-              className="text-6xl md:text-7xl lg:text-8xl tracking-tight leading-none"
+              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tight leading-[1.1]"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
@@ -79,7 +83,7 @@ export function Hero() {
             </motion.h1>
 
             <motion.p
-              className="text-xl md:text-2xl text-white/70 max-w-xl"
+              className="text-lg md:text-xl lg:text-2xl text-white/70 max-w-xl mx-auto lg:mx-0"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
@@ -90,7 +94,7 @@ export function Hero() {
 
           {/* CTA Buttons */}
           <motion.div
-            className="flex flex-col sm:flex-row gap-4"
+            className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
@@ -103,9 +107,9 @@ export function Hero() {
               }}
               whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(0, 229, 255, 0.5), 0 0 80px rgba(124, 58, 237, 0.3)" }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById("cta")?.scrollIntoView({ behavior: "smooth" })}
+              onClick={onOpenInquiry}
             >
-              <span className="relative z-10 flex items-center gap-2">
+              <span className="relative z-10 flex items-center justify-center gap-2">
                 Get Your Project Now
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
@@ -123,29 +127,29 @@ export function Hero() {
 
           {/* Stats */}
           <motion.div
-            className="flex gap-8 pt-4"
+            className="flex flex-wrap justify-center lg:justify-start gap-6 sm:gap-8 pt-4"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <div>
-              <div className="text-3xl font-bold text-white">10+</div>
-              <div className="text-sm text-white/60">Projects Delivered</div>
+            <div className="min-w-[100px]">
+              <div className="text-2xl sm:text-3xl font-bold text-white">10+</div>
+              <div className="text-xs sm:text-sm text-white/60">Projects Delivered</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-white">98%</div>
-              <div className="text-sm text-white/60">Success Rate</div>
+            <div className="min-w-[100px]">
+              <div className="text-2xl sm:text-3xl font-bold text-white">98%</div>
+              <div className="text-xs sm:text-sm text-white/60">Success Rate</div>
             </div>
-            <div>
-              <div className="text-3xl font-bold text-white">24/7</div>
-              <div className="text-sm text-white/60">Support</div>
+            <div className="min-w-[100px]">
+              <div className="text-2xl sm:text-3xl font-bold text-white">24/7</div>
+              <div className="text-xs sm:text-sm text-white/60">Support</div>
             </div>
           </motion.div>
         </motion.div>
 
         {/* Right - 3D Geometry */}
         <motion.div
-          className="relative h-[500px] md:h-[600px]"
+          className="relative h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.3 }}

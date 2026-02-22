@@ -103,6 +103,36 @@ pnpm dev
 pnpm build
 ```
 
+## 🗄️ Database Setup (Supabase)
+
+1. Create a new project at [Supabase](https://supabase.com/).
+2. In the SQL Editor, run the following to create the inquiries table:
+```sql
+create table project_inquiries (
+  id uuid default gen_random_uuid() primary key,
+  full_name text not null,
+  email text not null,
+  phone text not null,
+  project_title text,
+  delivery_time int not null,
+  submitted_at timestamp with time zone default now()
+);
+
+-- Enable RLS
+alter table project_inquiries enable row level security;
+
+-- Create policy to allow public inserts
+create policy "Allow public inserts"
+on project_inquiries for insert
+with check (true);
+```
+3. Copy your **Project URL** and **Anon Key** from Project Settings > API.
+4. Add them to your `.env` file:
+```env
+VITE_SUPABASE_URL=your_project_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
+
 ## 🎯 Component Structure
 
 ```

@@ -1,7 +1,11 @@
 import { motion } from "motion/react";
 import { ArrowRight, MessageSquare, Mail } from "lucide-react";
 
-export function CTA() {
+interface CTAProps {
+  onOpenInquiry: () => void;
+}
+
+export function CTA({ onOpenInquiry }: CTAProps) {
   return (
     <section id="cta" className="relative py-24 px-6 overflow-hidden">
       {/* Background */}
@@ -70,7 +74,7 @@ export function CTA() {
 
             {/* Heading */}
             <motion.h2
-              className="text-4xl md:text-6xl max-w-3xl mx-auto"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl max-w-3xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -92,7 +96,7 @@ export function CTA() {
 
             {/* Description */}
             <motion.p
-              className="text-xl text-white/70 max-w-2xl mx-auto"
+              className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -120,7 +124,7 @@ export function CTA() {
                   boxShadow: "0 0 40px rgba(0, 229, 255, 0.6), 0 0 80px rgba(124, 58, 237, 0.3)",
                 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => window.location.href = 'mailto:vertexproject.in@gmail.com'}
+                onClick={onOpenInquiry}
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   Start Your Project Today
@@ -158,6 +162,15 @@ export function CTA() {
               viewport={{ once: true }}
               transition={{ delay: 0.6 }}
             >
+              <a
+                href="https://wa.me/919391189053"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-white/60 hover:text-[#00E5FF] transition-colors"
+              >
+                <MessageSquare className="w-4 h-4 text-[#00E5FF]" />
+                <span className="text-sm">WhatsApp: +91 93911 89053</span>
+              </a>
               <div className="flex items-center gap-2 text-white/60">
                 <Mail className="w-4 h-4 text-[#7C3AED]" />
                 <span className="text-sm">vertexproject.in@gmail.com</span>

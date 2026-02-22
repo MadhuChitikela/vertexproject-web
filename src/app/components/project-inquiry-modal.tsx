@@ -49,8 +49,8 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
 
             if (supabaseError) throw supabaseError;
 
-            // 2. Send Emails (via Local Gmail SMTP Backend)
-            const backendResponse = await fetch(`${import.meta.env.VITE_BACKEND_URL || 'http://localhost:3001'}/api/inquiry`, {
+            // 2. Send Emails (via Backend)
+            const backendResponse = await fetch('/api/inquiry', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

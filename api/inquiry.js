@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer');
+import nodemailer from 'nodemailer';
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -8,7 +8,7 @@ const transporter = nodemailer.createTransport({
     },
 });
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
     // Add CORS headers for preflight requests
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');

@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 
 const useFluidCursor = () => {
     useEffect(() => {
+        if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
         let canvas = document.getElementById('fluid');
         if (!canvas) {
             canvas = document.createElement('canvas');

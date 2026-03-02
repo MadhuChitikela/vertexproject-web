@@ -3,7 +3,6 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { motion, AnimatePresence } from "motion/react";
 import { X, Send, CheckCircle2 } from "lucide-react";
 import { useForm } from "react-hook-form";
-import emailjs from "@emailjs/browser";
 import { supabase } from "../../lib/supabase";
 
 interface InquiryFormProps {

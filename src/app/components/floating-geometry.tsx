@@ -1,6 +1,21 @@
+import { useMemo } from "react";
 import { motion } from "motion/react";
 
 export function FloatingGeometry() {
+  const particles = useMemo(
+    () =>
+      [...Array(8)].map((_, i) => ({
+        id: i,
+        color: i % 2 === 0 ? "#00E5FF" : "#7C3AED",
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        xOffset: Math.random() * 20 - 10,
+        duration: 3 + Math.random() * 2,
+        delay: Math.random() * 2,
+      })),
+    []
+  );
+
   return (
     <div className="relative w-full h-full flex items-center justify-center">
       {/* Main 3D Vertex Object */}
@@ -151,25 +166,25 @@ export function FloatingGeometry() {
       </motion.div>
 
       {/* Floating Particles */}
-      {[...Array(8)].map((_, i) => (
+      {particles.map((p) => (
         <motion.div
-          key={i}
+          key={p.id}
           className="absolute w-2 h-2 rounded-full"
           style={{
-            background: i % 2 === 0 ? "#00E5FF" : "#7C3AED",
-            boxShadow: `0 0 10px ${i % 2 === 0 ? "#00E5FF" : "#7C3AED"}`,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            background: p.color,
+            boxShadow: `0 0 10px ${p.color}`,
+            left: p.left,
+            top: p.top,
           }}
           animate={{
             y: [0, -30, 0],
-            x: [0, Math.random() * 20 - 10, 0],
+            x: [0, p.xOffset, 0],
             opacity: [0.3, 1, 0.3],
           }}
           transition={{
-            duration: 3 + Math.random() * 2,
+            duration: p.duration,
             repeat: Infinity,
-            delay: Math.random() * 2,
+            delay: p.delay,
             ease: "easeInOut",
           }}
         />

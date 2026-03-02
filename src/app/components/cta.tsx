@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowRight, MessageSquare, Mail } from "lucide-react";
+import { ArrowRight, MessageSquare, Mail, Calendar } from "lucide-react";
 
 interface CTAProps {
   onOpenInquiry: () => void;
@@ -8,68 +8,59 @@ interface CTAProps {
 export function CTA({ onOpenInquiry }: CTAProps) {
   return (
     <section id="cta" className="relative py-24 px-6 overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0 bg-[#0B0F19]" />
 
-      {/* Gradient Orbs */}
+      {/* Gradient orb */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-20"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full opacity-20"
         style={{
           background: "radial-gradient(circle, #00E5FF 0%, #7C3AED 50%, transparent 70%)",
-          filter: "blur(80px)",
+          filter: "blur(100px)",
         }}
       />
 
       <div className="relative z-10 max-w-5xl mx-auto">
         <motion.div
-          className="relative p-12 md:p-16 rounded-3xl backdrop-blur-xl border border-white/20 overflow-hidden"
+          className="relative p-12 md:p-16 rounded-3xl backdrop-blur-xl border border-white/15 overflow-hidden text-center"
           style={{
-            background: "linear-gradient(135deg, rgba(0, 229, 255, 0.1), rgba(124, 58, 237, 0.1))",
+            background: "linear-gradient(135deg, rgba(0, 229, 255, 0.07), rgba(124, 58, 237, 0.07))",
           }}
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          {/* Animated Border */}
+          {/* Animated border */}
           <motion.div
-            className="absolute inset-0 rounded-3xl"
+            className="absolute inset-0 rounded-3xl pointer-events-none"
             style={{
               background: "linear-gradient(135deg, #00E5FF, #7C3AED, #00E5FF)",
               backgroundSize: "200% 200%",
+              padding: "2px",
+              WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+              WebkitMaskComposite: "xor",
+              maskComposite: "exclude",
             }}
-            animate={{
-              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-            }}
-            transition={{
-              duration: 5,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          >
-            <div
-              className="absolute inset-[2px] rounded-3xl"
-              style={{
-                background: "linear-gradient(135deg, rgba(11, 15, 25, 0.95), rgba(11, 15, 25, 0.9))",
-              }}
-            />
-          </motion.div>
+            animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+          />
 
-          {/* Content */}
-          <div className="relative z-10 text-center space-y-8">
+          <div className="relative z-10 space-y-8">
             {/* Badge */}
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full backdrop-blur-sm border border-white/20"
-              style={{
-                background: "rgba(255, 255, 255, 0.05)",
-              }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 backdrop-blur-sm"
+              style={{ background: "rgba(255,255,255,0.04)" }}
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
             >
-              <div className="w-2 h-2 rounded-full bg-[#00E5FF]" style={{ boxShadow: "0 0 10px #00E5FF" }} />
-              <span className="text-sm text-white/80">Limited Time Offer</span>
+              <motion.div
+                className="w-2 h-2 rounded-full bg-[#00E5FF]"
+                animate={{ boxShadow: ["0 0 6px #00E5FF", "0 0 18px #00E5FF", "0 0 6px #00E5FF"] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+              <span className="text-sm text-white/70">Start Today. Submit With Confidence.</span>
             </motion.div>
 
             {/* Heading */}
@@ -79,84 +70,83 @@ export function CTA({ onOpenInquiry }: CTAProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
+              style={{
+                background: "linear-gradient(135deg, #ffffff 0%, #00E5FF 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                fontWeight: 800,
+                lineHeight: 1.2,
+              }}
             >
-              <span
-                style={{
-                  background: "linear-gradient(135deg, #ffffff 0%, #00E5FF 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  fontWeight: 800,
-                  lineHeight: 1.2,
-                }}
-              >
-                Ready to Ace Your Project?
-              </span>
+              Ready To Submit With Confidence?
             </motion.h2>
 
-            {/* Description */}
             <motion.p
-              className="text-lg md:text-xl text-white/70 max-w-2xl mx-auto"
+              className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.4 }}
             >
-              Join 500+ students who transformed their academic projects into success stories
+              Start your AI-supported project journey today. Code explanation, documentation, viva prep — all in one platform.
             </motion.p>
 
             {/* Buttons */}
             <motion.div
-              className="flex flex-col sm:flex-row gap-4 justify-center pt-4"
+              className="flex flex-col sm:flex-row gap-4 justify-center pt-2"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.5 }}
             >
+              {/* Primary */}
               <motion.button
-                className="group px-8 py-4 rounded-xl text-lg font-semibold text-white relative overflow-hidden"
-                style={{
-                  background: "linear-gradient(135deg, #00E5FF, #7C3AED)",
-                  boxShadow: "0 0 30px rgba(0, 229, 255, 0.4), 0 0 60px rgba(124, 58, 237, 0.2)",
+                id="cta-book-consultation"
+                type="button"
+                className="group relative px-8 py-4 rounded-xl text-lg font-bold text-white overflow-hidden"
+                style={{ background: "linear-gradient(135deg, #00E5FF, #7C3AED)" }}
+                animate={{
+                  boxShadow: [
+                    "0 0 25px rgba(0,229,255,0.4), 0 0 50px rgba(124,58,237,0.2)",
+                    "0 0 45px rgba(0,229,255,0.7), 0 0 90px rgba(124,58,237,0.4)",
+                    "0 0 25px rgba(0,229,255,0.4), 0 0 50px rgba(124,58,237,0.2)",
+                  ],
                 }}
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 40px rgba(0, 229, 255, 0.6), 0 0 80px rgba(124, 58, 237, 0.3)",
-                }}
-                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 2.5, repeat: Infinity }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={onOpenInquiry}
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
-                  Start Your Project Today
+                  <Calendar className="w-5 h-5" />
+                  Book Free Consultation
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
-
-                {/* Animated Background */}
                 <motion.div
                   className="absolute inset-0"
-                  style={{
-                    background: "linear-gradient(135deg, #7C3AED, #00E5FF)",
-                    opacity: 0,
-                  }}
+                  style={{ background: "linear-gradient(135deg, #7C3AED, #00E5FF)", opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 />
               </motion.button>
 
+              {/* Secondary */}
               <motion.button
-                className="px-8 py-4 rounded-xl text-lg font-semibold text-white border border-white/20 backdrop-blur-sm hover:bg-white/5 transition-colors flex items-center justify-center gap-2"
-                whileHover={{ scale: 1.05, borderColor: "rgba(0, 229, 255, 0.5)" }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => window.open('https://instagram.com/vertexproject.in', '_blank')}
+                type="button"
+                className="px-8 py-4 rounded-xl text-lg font-bold text-white border border-white/20 backdrop-blur-sm flex items-center justify-center gap-2"
+                whileHover={{ scale: 1.05, borderColor: "rgba(0,229,255,0.5)", background: "rgba(0,229,255,0.06)" }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => window.open("https://wa.me/919391189053", "_blank")}
               >
-                <MessageSquare className="w-5 h-5" />
-                Chat with Us
+                <MessageSquare className="w-5 h-5 text-[#25D366]" />
+                Chat on WhatsApp
               </motion.button>
             </motion.div>
 
-            {/* Contact Options */}
+            {/* Contact */}
             <motion.div
-              className="flex flex-wrap justify-center gap-6 pt-8 border-t border-white/10"
+              className="flex flex-wrap justify-center gap-6 pt-6 border-t border-white/8"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -166,27 +156,26 @@ export function CTA({ onOpenInquiry }: CTAProps) {
                 href="https://wa.me/919391189053"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-white/60 hover:text-[#00E5FF] transition-colors"
+                className="flex items-center gap-2 text-white/50 hover:text-[#00E5FF] transition-colors text-sm"
               >
-                <MessageSquare className="w-4 h-4 text-[#00E5FF]" />
-                <span className="text-sm">WhatsApp: +91 93911 89053</span>
+                <MessageSquare className="w-4 h-4 text-[#25D366]" />
+                +91 93911 89053
               </a>
-              <div className="flex items-center gap-2 text-white/60">
+              <div className="flex items-center gap-2 text-white/50 text-sm">
                 <Mail className="w-4 h-4 text-[#7C3AED]" />
-                <span className="text-sm">vertexproject.in@gmail.com</span>
+                vertexproject.in@gmail.com
               </div>
             </motion.div>
 
-            {/* Trust Indicators */}
             <motion.div
-              className="flex flex-wrap justify-center gap-8 pt-6"
+              className="flex flex-wrap justify-center gap-6"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ delay: 0.7 }}
             >
-              {["✓ 100% Original Code", "✓ On-Time Delivery", "✓ 24/7 Support"].map((item, i) => (
-                <div key={i} className="text-sm text-white/70">
+              {["✓ 100% Original Code", "✓ AI Explanation Included", "✓ Viva Support", "✓ On-Time Delivery"].map((item, i) => (
+                <div key={i} className="text-sm text-white/55">
                   {item}
                 </div>
               ))}

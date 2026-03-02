@@ -1,41 +1,47 @@
 import { motion } from "motion/react";
-import { Code, Cpu, FileText, Headphones } from "lucide-react";
+import { Code, Cpu, Wifi, Bot, Headphones, CheckCircle2 } from "lucide-react";
 
-const services = [
+const deliverables = [
   {
     icon: Code,
-    title: "IEEE Projects",
-    description: "Latest IEEE papers implemented with complete documentation and working models.",
-    features: ["2024 Papers", "Source Code", "Documentation", "Demo"],
-    gradient: "from-[#00E5FF] to-[#0099CC]",
+    title: "Mini Projects",
+    description: "Perfect for beginners. Small-scale projects with full code, documentation, and demo support.",
+    tags: ["Web Dev", "Python", "Java", "Android"],
+    color: "#00E5FF",
   },
   {
     icon: Cpu,
-    title: "Custom Software",
-    description: "Tailored software solutions built with cutting-edge technologies and best practices.",
-    features: ["AI/ML Systems", "Web Apps", "Mobile Apps", "APIs"],
-    gradient: "from-[#7C3AED] to-[#5B21B6]",
+    title: "Major Projects",
+    description: "In-depth final year projects with advanced architecture, AI integration, and complete IEEE reports.",
+    tags: ["ML/AI", "Full Stack", "Cloud", "IEEE Format"],
+    color: "#7C3AED",
   },
   {
-    icon: FileText,
-    title: "Full Report + PPT",
-    description: "Professional documentation with detailed reports and presentation materials.",
-    features: ["IEEE Format", "PPT Slides", "Diagrams", "References"],
-    gradient: "from-[#00E5FF] to-[#7C3AED]",
+    icon: Wifi,
+    title: "IoT & Embedded Systems",
+    description: "Hardware-connected solutions using Raspberry Pi, Arduino, and sensor-based data pipelines.",
+    tags: ["Arduino", "Raspberry Pi", "ESP32", "Sensors"],
+    color: "#00E5FF",
+  },
+  {
+    icon: Bot,
+    title: "AI & Machine Learning",
+    description: "Deep learning, computer vision, NLP, and predictive analytics projects with full explanation.",
+    tags: ["TensorFlow", "PyTorch", "NLP", "CV"],
+    color: "#a78bfa",
   },
   {
     icon: Headphones,
-    title: "Complete Support",
-    description: "End-to-end assistance from project selection to final delivery and beyond.",
-    features: ["24/7 Chat", "Code Review", "Debugging", "Deployment"],
-    gradient: "from-[#7C3AED] to-[#00E5FF]",
+    title: "Full Post-Delivery Support",
+    description: "We stay with you until your viva is done. AI mentoring, query support, and revision assistance.",
+    tags: ["Viva Prep", "Code Help", "Revisions", "24/7"],
+    color: "#34D399",
   },
 ];
 
 export function Services() {
   return (
     <section id="services" className="relative py-24 px-6 overflow-hidden">
-      {/* Background Elements */}
       <div className="absolute inset-0 bg-[#0B0F19]" />
       <div
         className="absolute top-1/2 left-0 w-96 h-96 rounded-full opacity-10"
@@ -46,126 +52,107 @@ export function Services() {
       />
 
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
-          className="text-center mb-12 md:mb-16"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
+          <div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#7C3AED]/30 mb-6"
+            style={{ background: "rgba(124, 58, 237, 0.08)" }}
+          >
+            <CheckCircle2 className="w-4 h-4 text-[#a78bfa]" />
+            <span className="text-sm text-[#a78bfa] font-semibold">Everything You Need</span>
+          </div>
           <h2
             className="text-4xl sm:text-5xl md:text-6xl mb-4"
             style={{
-              background: "linear-gradient(135deg, #ffffff 0%, #00E5FF 100%)",
+              background: "linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #00E5FF 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
               fontWeight: 800,
             }}
           >
-            Our Services
+            Complete Project Ecosystem
           </h2>
-          <p className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto">
-            Comprehensive tech solutions tailored for academic excellence
+          <p className="text-lg md:text-xl text-white/50 max-w-2xl mx-auto">
+            From concept to confident submission — every type of project, fully supported.
           </p>
         </motion.div>
 
-        {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service, index) => (
+        {/* Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {deliverables.map((item, index) => (
             <motion.div
-              key={service.title}
-              className="group relative"
+              key={item.title}
+              className={`group relative ${index === 4 ? "md:col-span-2 lg:col-span-1" : ""}`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
             >
-              {/* Glass Card */}
               <motion.div
-                className="relative h-full p-6 rounded-2xl backdrop-blur-xl border border-white/10 overflow-hidden"
+                className="relative h-full p-7 rounded-2xl backdrop-blur-xl border border-white/8 overflow-hidden"
                 style={{
-                  background: "linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))",
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
                 }}
                 whileHover={{
-                  y: -8,
-                  transition: { duration: 0.3 },
+                  y: -6,
+                  borderColor: `${item.color}40`,
+                  boxShadow: `0 15px 50px ${item.color}20`,
                 }}
+                transition={{ duration: 0.3 }}
               >
-                {/* Glow Effect */}
                 <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
                   style={{
-                    background: `linear-gradient(135deg, ${index % 2 === 0 ? 'rgba(0, 229, 255, 0.1)' : 'rgba(124, 58, 237, 0.1)'}, transparent)`,
+                    background: `radial-gradient(circle at top left, ${item.color}12, transparent 60%)`,
+                  }}
+                />
+                <div
+                  className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-t-2xl"
+                  style={{
+                    background: `linear-gradient(90deg, transparent, ${item.color}, transparent)`,
                   }}
                 />
 
-                {/* Top Border Glow */}
-                <div
-                  className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{
-                    background: `linear-gradient(90deg, transparent, ${index % 2 === 0 ? '#00E5FF' : '#7C3AED'}, transparent)`,
-                    boxShadow: `0 0 20px ${index % 2 === 0 ? '#00E5FF' : '#7C3AED'}`,
-                  }}
-                />
-
-                <div className="relative z-10 space-y-4">
-                  {/* Icon */}
+                <div className="relative z-10 space-y-5">
                   <motion.div
                     className="w-14 h-14 rounded-xl flex items-center justify-center"
                     style={{
-                      background: `linear-gradient(135deg, ${index % 2 === 0 ? 'rgba(0, 229, 255, 0.2)' : 'rgba(124, 58, 237, 0.2)'}, ${index % 2 === 0 ? 'rgba(0, 229, 255, 0.1)' : 'rgba(124, 58, 237, 0.1)'})`,
-                      border: `1px solid ${index % 2 === 0 ? 'rgba(0, 229, 255, 0.3)' : 'rgba(124, 58, 237, 0.3)'}`,
+                      background: `${item.color}15`,
+                      border: `1px solid ${item.color}35`,
                     }}
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
+                    whileHover={{ scale: 1.1, rotate: 360 }}
+                    transition={{ duration: 0.5 }}
                   >
-                    <service.icon
-                      className="w-7 h-7"
-                      style={{ color: index % 2 === 0 ? '#00E5FF' : '#7C3AED' }}
-                    />
+                    <item.icon className="w-7 h-7" style={{ color: item.color }} />
                   </motion.div>
 
-                  {/* Title */}
-                  <h3 className="text-2xl text-white" style={{ fontWeight: 700 }}>
-                    {service.title}
-                  </h3>
+                  <div className="space-y-2">
+                    <h3 className="text-xl text-white font-bold">{item.title}</h3>
+                    <p className="text-white/55 text-sm leading-relaxed">{item.description}</p>
+                  </div>
 
-                  {/* Description */}
-                  <p className="text-white/60 leading-relaxed">
-                    {service.description}
-                  </p>
-
-                  {/* Features List */}
-                  <ul className="space-y-2 pt-2">
-                    {service.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-2 text-sm text-white/70">
-                        <div
-                          className="w-1.5 h-1.5 rounded-full"
-                          style={{
-                            background: index % 2 === 0 ? '#00E5FF' : '#7C3AED',
-                            boxShadow: `0 0 6px ${index % 2 === 0 ? '#00E5FF' : '#7C3AED'}`,
-                          }}
-                        />
-                        {feature}
-                      </li>
+                  <div className="flex flex-wrap gap-2">
+                    {item.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="text-xs px-2.5 py-1 rounded-md font-medium"
+                        style={{
+                          background: `${item.color}10`,
+                          color: item.color,
+                          border: `1px solid ${item.color}25`,
+                        }}
+                      >
+                        {tag}
+                      </span>
                     ))}
-                  </ul>
-
-                  {/* Learn More */}
-                  <motion.div
-                    className="pt-4 text-sm flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                    style={{ color: index % 2 === 0 ? '#00E5FF' : '#7C3AED' }}
-                  >
-                    Learn More
-                    <motion.span
-                      animate={{ x: [0, 4, 0] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      →
-                    </motion.span>
-                  </motion.div>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>

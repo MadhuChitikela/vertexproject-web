@@ -4,11 +4,16 @@ import { Menu, X } from "lucide-react";
 import { useState } from "react";
 
 const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Process", href: "#process" },
-  { label: "Projects", href: "#projects" },
-  { label: "About", href: "#about" },
+  { label: "AI Features", sectionId: "ai-features" },
+  { label: "Services", sectionId: "services" },
+  { label: "Process", sectionId: "process" },
+  { label: "Reviews", sectionId: "testimonials" },
 ];
+
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 interface NavbarProps {
   onOpenInquiry: () => void;
@@ -41,11 +46,12 @@ export function Navbar({ onOpenInquiry }: NavbarProps) {
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-8">
               {navLinks.map((link) => (
-                <motion.a
+                <motion.button
                   key={link.label}
-                  href={link.href}
-                  className="text-white/80 hover:text-white transition-colors relative group"
+                  type="button"
+                  className="text-white/80 hover:text-white transition-colors relative group bg-transparent border-none cursor-pointer"
                   whileHover={{ scale: 1.05 }}
+                  onClick={() => scrollToSection(link.sectionId)}
                 >
                   {link.label}
                   <motion.div
@@ -55,11 +61,12 @@ export function Navbar({ onOpenInquiry }: NavbarProps) {
                     }}
                     transition={{ duration: 0.3 }}
                   />
-                </motion.a>
+                </motion.button>
               ))}
 
               <motion.button
-                className="px-6 py-2 rounded-lg text-white"
+                type="button"
+                className="px-6 py-2 rounded-lg text-white font-semibold"
                 style={{
                   background: "linear-gradient(135deg, #00E5FF, #7C3AED)",
                   boxShadow: "0 0 20px rgba(0, 229, 255, 0.3)",
@@ -77,6 +84,7 @@ export function Navbar({ onOpenInquiry }: NavbarProps) {
 
             {/* Mobile Menu Button */}
             <motion.button
+              type="button"
               className="md:hidden p-2 rounded-lg backdrop-blur-sm border border-white/10"
               onClick={() => setIsOpen(!isOpen)}
               whileTap={{ scale: 0.95 }}
@@ -98,20 +106,24 @@ export function Navbar({ onOpenInquiry }: NavbarProps) {
               exit={{ opacity: 0, height: 0 }}
             >
               {navLinks.map((link, index) => (
-                <motion.a
+                <motion.button
                   key={link.label}
-                  href={link.href}
-                  className="block text-white/80 hover:text-white transition-colors py-2"
+                  type="button"
+                  className="block w-full text-left text-white/80 hover:text-white transition-colors py-2 bg-transparent border-none cursor-pointer"
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  onClick={() => setIsOpen(false)}
+                  onClick={() => {
+                    setIsOpen(false);
+                    scrollToSection(link.sectionId);
+                  }}
                 >
                   {link.label}
-                </motion.a>
+                </motion.button>
               ))}
               <motion.button
-                className="w-full px-6 py-3 rounded-lg text-white mt-4"
+                type="button"
+                className="w-full px-6 py-3 rounded-lg text-white font-semibold mt-4"
                 style={{
                   background: "linear-gradient(135deg, #00E5FF, #7C3AED)",
                 }}

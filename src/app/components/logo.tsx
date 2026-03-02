@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import type { Variants } from "motion/react";
 
 interface LogoProps {
   variant?: "icon" | "full" | "horizontal";
@@ -15,7 +16,7 @@ export function Logo({ variant = "full", size = "md", animated = true }: LogoPro
 
   const dimensions = sizeMap[size];
 
-  const iconVariants = {
+  const iconVariants: Variants = {
     initial: { scale: 0.8, opacity: 0 },
     animate: {
       scale: 1,
@@ -34,7 +35,7 @@ export function Logo({ variant = "full", size = "md", animated = true }: LogoPro
     },
   };
 
-  const textVariants = {
+  const textVariants: Variants = {
     initial: { x: -20, opacity: 0 },
     animate: {
       x: 0,

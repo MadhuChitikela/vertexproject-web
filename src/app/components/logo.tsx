@@ -62,9 +62,9 @@ export function Logo({ variant = "full", size = "md", animated = true }: LogoPro
     >
       <defs>
         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="#00E5FF" />
-          <stop offset="50%" stopColor="#7C3AED" />
-          <stop offset="100%" stopColor="#7C3AED" />
+          <stop offset="0%" stopColor="#92dbe0" />
+          <stop offset="50%" stopColor="#0b7bff" />
+          <stop offset="100%" stopColor="#0b7bff" />
         </linearGradient>
         <filter id="glow">
           <feGaussianBlur stdDeviation="3" result="coloredBlur" />
@@ -142,7 +142,7 @@ export function Logo({ variant = "full", size = "md", animated = true }: LogoPro
         cx="50"
         cy="10"
         r="3"
-        fill="#00E5FF"
+        fill="#92dbe0"
         filter="url(#glow)"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -152,7 +152,7 @@ export function Logo({ variant = "full", size = "md", animated = true }: LogoPro
         cx="85"
         cy="75"
         r="3"
-        fill="#7C3AED"
+        fill="#0b7bff"
         filter="url(#glow)"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -162,7 +162,7 @@ export function Logo({ variant = "full", size = "md", animated = true }: LogoPro
         cx="15"
         cy="75"
         r="3"
-        fill="#7C3AED"
+        fill="#0b7bff"
         filter="url(#glow)"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
@@ -183,7 +183,7 @@ export function Logo({ variant = "full", size = "md", animated = true }: LogoPro
         style={{
           fontSize: dimensions.text,
           fontWeight: 700,
-          background: "linear-gradient(135deg, #00E5FF 0%, #7C3AED 100%)",
+          background: "linear-gradient(135deg, #92dbe0 0%, #0b7bff 100%)",
           WebkitBackgroundClip: "text",
           WebkitTextFillColor: "transparent",
           backgroundClip: "text",
@@ -196,7 +196,7 @@ export function Logo({ variant = "full", size = "md", animated = true }: LogoPro
         style={{
           fontSize: dimensions.text * 0.35,
           fontWeight: 500,
-          color: "#00E5FF",
+          color: "#92dbe0",
           opacity: 0.8,
         }}
       >

@@ -23,7 +23,7 @@ export function Footer() {
       <div
         className="absolute bottom-0 left-1/4 w-96 h-96 rounded-full opacity-5"
         style={{
-          background: "radial-gradient(circle, #00E5FF 0%, transparent 70%)",
+          background: "radial-gradient(circle, #0b7bff 0%, transparent 70%)",
           filter: "blur(80px)",
         }}
       />
@@ -72,7 +72,7 @@ export function Footer() {
                   <li key={link}>
                     <a
                       href="#"
-                      className="text-white/60 hover:text-[#00E5FF] transition-colors text-sm"
+                      className="text-white/60 hover:text-[#92dbe0] transition-colors text-sm"
                     >
                       {link}
                     </a>
@@ -87,7 +87,7 @@ export function Footer() {
         <motion.div
           className="mb-12 p-6 rounded-2xl backdrop-blur-sm border border-white/10"
           style={{
-            background: "linear-gradient(135deg, rgba(0, 229, 255, 0.05), rgba(124, 58, 237, 0.05))",
+            background: "linear-gradient(135deg, rgba(146, 219, 224, 0.05), rgba(11, 123, 255, 0.05))",
           }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -105,7 +105,7 @@ export function Footer() {
               </div>
               <div className="min-w-0">
                 <div className="text-xs text-white/50">Email Us</div>
-                <a href="mailto:vertexproject.in@gmail.com" className="text-sm text-white hover:text-[#00E5FF] transition-colors truncate block">vertexproject.in@gmail.com</a>
+                <a href="mailto:vertexproject.in@gmail.com" className="text-sm text-white hover:text-[#92dbe0] transition-colors truncate block">vertexproject.in@gmail.com</a>
               </div>
             </div>
 
@@ -135,7 +135,7 @@ export function Footer() {
               </div>
               <div>
                 <div className="text-xs text-white/50">WhatsApp</div>
-                <a href="https://wa.me/919391189053" target="_blank" rel="noopener noreferrer" className="text-sm text-white hover:text-[#00E5FF] transition-colors">+91 93911 89053</a>
+                <a href="https://wa.me/919391189053" target="_blank" rel="noopener noreferrer" className="text-sm text-white hover:text-[#92dbe0] transition-colors">+91 93911 89053</a>
               </div>
             </div>
 
@@ -146,7 +146,7 @@ export function Footer() {
                   background: "linear-gradient(135deg, rgba(0, 229, 255, 0.2), rgba(124, 58, 237, 0.2))",
                 }}
               >
-                <MapPin className="w-5 h-5 text-[#00E5FF]" />
+                <MapPin className="w-5 h-5 text-[#0b7bff]" />
               </div>
               <div>
                 <div className="text-xs text-white/50">Location</div>
@@ -163,13 +163,13 @@ export function Footer() {
           </div>
 
           <div className="flex gap-6 text-sm">
-            <a href="#" className="text-white/50 hover:text-[#00E5FF] transition-colors">
+            <a href="#" className="text-white/50 hover:text-[#92dbe0] transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="text-white/50 hover:text-[#00E5FF] transition-colors">
+            <a href="#" className="text-white/50 hover:text-[#92dbe0] transition-colors">
               Terms of Service
             </a>
-            <a href="#" className="text-white/50 hover:text-[#00E5FF] transition-colors">
+            <a href="#" className="text-white/50 hover:text-[#92dbe0] transition-colors">
               Cookie Policy
             </a>
           </div>

@@ -95,7 +95,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                 <motion.div
                                     className="w-full max-w-lg bg-[#0B0F19] rounded-3xl border border-white/20 overflow-hidden relative pointer-events-auto"
                                     style={{
-                                        boxShadow: "0 0 40px rgba(0, 229, 255, 0.15), 0 0 80px rgba(124, 58, 237, 0.1)",
+                                        boxShadow: "0 0 40px rgba(11, 123, 255, 0.15), 0 0 80px rgba(56, 101, 207, 0.1)",
                                     }}
                                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                                     animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -106,7 +106,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                     <motion.div
                                         className="absolute inset-0 rounded-3xl pointer-events-none"
                                         style={{
-                                            background: "linear-gradient(135deg, #00E5FF, #7C3AED, #00E5FF)",
+                                            background: "linear-gradient(135deg, #92dbe0, #0b7bff, #92dbe0)",
                                             backgroundSize: "200% 200%",
                                             padding: "2px",
                                             opacity: 0.5,
@@ -125,7 +125,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
 
                                     <div className="relative z-10 p-8">
                                         <div className="flex justify-between items-center mb-8">
-                                            <Dialog.Title className="text-2xl font-bold bg-gradient-to-r from-white to-[#00E5FF] bg-clip-text text-transparent">
+                                            <Dialog.Title className="text-2xl font-bold bg-gradient-to-r from-white to-[#92dbe0] bg-clip-text text-transparent">
                                                 Project Inquiry
                                             </Dialog.Title>
                                             <Dialog.Close asChild>
@@ -141,7 +141,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                     <label className="text-sm font-medium text-white/70 ml-1">Full Name *</label>
                                                     <input
                                                         {...register("fullName", { required: "Name is required" })}
-                                                        className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.fullName ? 'border-red-500/50' : 'border-white/10'} focus:border-[#00E5FF]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
+                                                        className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.fullName ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
                                                         placeholder="John Doe"
                                                     />
                                                     {errors.fullName && <p className="text-xs text-red-400 ml-1">{errors.fullName.message}</p>}
@@ -158,7 +158,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                                     message: "Invalid email address"
                                                                 }
                                                             })}
-                                                            className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.email ? 'border-red-500/50' : 'border-white/10'} focus:border-[#00E5FF]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
+                                                            className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.email ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
                                                             placeholder="john@example.com"
                                                         />
                                                         {errors.email && <p className="text-xs text-red-400 ml-1">{errors.email.message}</p>}
@@ -167,7 +167,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                         <label className="text-sm font-medium text-white/70 ml-1">Phone Number *</label>
                                                         <input
                                                             {...register("phone", { required: "Phone is required" })}
-                                                            className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.phone ? 'border-red-500/50' : 'border-white/10'} focus:border-[#00E5FF]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
+                                                            className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.phone ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
                                                             placeholder="+91 XXXXX XXXXX"
                                                         />
                                                         {errors.phone && <p className="text-xs text-red-400 ml-1">{errors.phone.message}</p>}
@@ -178,7 +178,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                     <label className="text-sm font-medium text-white/70 ml-1">Project Title</label>
                                                     <input
                                                         {...register("projectTitle")}
-                                                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#00E5FF]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
+                                                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
                                                         placeholder="e.g. AI-based Attendance System"
                                                     />
                                                 </div>
@@ -191,7 +191,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                             required: "Delivery time is required",
                                                             min: { value: 1, message: "Minimum 1 day" }
                                                         })}
-                                                        className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.deliveryTime ? 'border-red-500/50' : 'border-white/10'} focus:border-[#00E5FF]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
+                                                        className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.deliveryTime ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
                                                         placeholder="e.g. 7"
                                                     />
                                                     {errors.deliveryTime && <p className="text-xs text-red-400 ml-1">{errors.deliveryTime.message}</p>}
@@ -202,8 +202,8 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                     disabled={isSubmitting}
                                                     className="w-full group px-8 py-4 rounded-xl text-lg font-semibold text-white relative overflow-hidden mt-4 disabled:opacity-50"
                                                     style={{
-                                                        background: "linear-gradient(135deg, #00E5FF, #7C3AED)",
-                                                        boxShadow: "0 0 20px rgba(0, 229, 255, 0.3)",
+                                                        background: "linear-gradient(135deg, #0b7bff, #3865cf)",
+                                                        boxShadow: "0 0 20px rgba(11, 123, 255, 0.3)",
                                                     }}
                                                     whileHover={{ scale: 1.02 }}
                                                     whileTap={{ scale: 0.98 }}

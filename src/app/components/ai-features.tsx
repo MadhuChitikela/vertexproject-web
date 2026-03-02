@@ -15,10 +15,10 @@ const aiFeatures = [
             "Concept summaries",
             "Anticipated viva Q&A",
         ],
-        gradient: "from-[#00E5FF] to-[#0099CC]",
-        glow: "rgba(0, 229, 255, 0.35)",
-        border: "rgba(0, 229, 255, 0.25)",
-        accentColor: "#00E5FF",
+        gradient: "from-[#92dbe0] to-[#3865cf]",
+        glow: "rgba(146, 219, 224, 0.35)",
+        border: "rgba(146, 219, 224, 0.25)",
+        accentColor: "#92dbe0",
     },
     {
         icon: FileText,
@@ -33,10 +33,10 @@ const aiFeatures = [
             "Automatic flowcharts",
             "Ready-to-present PPT slides",
         ],
-        gradient: "from-[#7C3AED] to-[#5B21B6]",
-        glow: "rgba(124, 58, 237, 0.35)",
-        border: "rgba(124, 58, 237, 0.25)",
-        accentColor: "#a78bfa",
+        gradient: "from-[#0b7bff] to-[#3865cf]",
+        glow: "rgba(11, 123, 255, 0.35)",
+        border: "rgba(11, 123, 255, 0.25)",
+        accentColor: "#0b7bff",
     },
     {
         icon: Mic,
@@ -51,17 +51,20 @@ const aiFeatures = [
             "Domain-specific accuracy",
             "Confidence-building feedback",
         ],
-        gradient: "from-[#00E5FF] to-[#7C3AED]",
-        glow: "rgba(167, 139, 250, 0.35)",
-        border: "rgba(167, 139, 250, 0.25)",
-        accentColor: "#c4b5fd",
+        gradient: "from-[#92dbe0] to-[#0b7bff]",
+        glow: "rgba(146, 219, 224, 0.35)",
+        border: "rgba(146, 219, 224, 0.25)",
+        accentColor: "#92dbe0",
     },
 ];
 
-export function AiFeatures() {
+interface AiFeaturesProps {
+    onOpenInquiry: () => void;
+}
+
+export function AiFeatures({ onOpenInquiry }: AiFeaturesProps) {
     return (
-        <section id="ai-features" className="relative py-24 px-6 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19] via-[#0f1421] to-[#0B0F19]" />
+        <section id="ai-features" className="relative py-24 px-6 overflow-hidden bg-transparent">
 
             {/* Animated grid */}
             <div className="absolute inset-0 opacity-10">
@@ -69,8 +72,8 @@ export function AiFeatures() {
                     className="absolute inset-0"
                     style={{
                         backgroundImage: `
-              linear-gradient(rgba(0, 229, 255, 0.15) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(124, 58, 237, 0.15) 1px, transparent 1px)
+              linear-gradient(rgba(146, 219, 224, 0.15) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(11, 123, 255, 0.15) 1px, transparent 1px)
             `,
                         backgroundSize: "60px 60px",
                     }}
@@ -81,27 +84,27 @@ export function AiFeatures() {
                 {/* Header */}
                 <motion.div
                     className="text-center mb-16"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
+                    initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    viewport={{ once: false, amount: 0.2 }}
+                    transition={{ duration: 0.8 }}
                 >
                     <div
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#00E5FF]/20 mb-6"
-                        style={{ background: "rgba(0, 229, 255, 0.05)" }}
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#92dbe0]/20 mb-6"
+                        style={{ background: "rgba(146, 219, 224, 0.05)" }}
                     >
                         <motion.div
-                            className="w-2 h-2 rounded-full bg-[#00E5FF]"
-                            animate={{ boxShadow: ["0 0 6px #00E5FF", "0 0 16px #00E5FF", "0 0 6px #00E5FF"] }}
+                            className="w-2 h-2 rounded-full bg-[#92dbe0]"
+                            animate={{ boxShadow: ["0 0 6px #92dbe0", "0 0 16px #92dbe0", "0 0 6px #92dbe0"] }}
                             transition={{ duration: 2, repeat: Infinity }}
                         />
-                        <span className="text-sm text-[#00E5FF] font-semibold tracking-wide">Vertex AI Project Assist™</span>
+                        <span className="text-sm text-[#92dbe0] font-semibold tracking-wide">Vertex AI Project Assist™</span>
                     </div>
 
                     <h2
-                        className="text-4xl sm:text-5xl md:text-6xl mb-4"
+                        className="text-4xl sm:text-5xl md:text-6xl mb-4 tracking-normal leading-tight"
                         style={{
-                            background: "linear-gradient(135deg, #ffffff 0%, #00E5FF 60%, #7C3AED 100%)",
+                            background: "linear-gradient(135deg, #ffffff 0%, #92dbe0 60%, #0b7bff 100%)",
                             WebkitBackgroundClip: "text",
                             WebkitTextFillColor: "transparent",
                             backgroundClip: "text",
@@ -113,7 +116,7 @@ export function AiFeatures() {
                     <h3
                         className="text-3xl sm:text-4xl md:text-5xl mb-6"
                         style={{
-                            background: "linear-gradient(135deg, #a78bfa 0%, #00E5FF 100%)",
+                            background: "linear-gradient(135deg, #0b7bff 0%, #92dbe0 100%)",
                             WebkitBackgroundClip: "text",
                             WebkitTextFillColor: "transparent",
                             backgroundClip: "text",
@@ -133,29 +136,62 @@ export function AiFeatures() {
                         <motion.div
                             key={feature.title}
                             className="group relative"
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.7, delay: index * 0.15 }}
+                            initial={{ opacity: 0, y: 40, scale: 0.95, filter: "blur(4px)" }}
+                            whileInView={{
+                                opacity: 1,
+                                y: 0,
+                                scale: 1,
+                                filter: "blur(0px)",
+                                transition: {
+                                    duration: 0.8,
+                                    delay: index * 0.1,
+                                    ease: "easeOut"
+                                }
+                            }}
+                            animate={{
+                                y: [0, -8, 0],
+                            }}
+                            viewport={{ once: false, amount: 0.2 }}
+                            transition={{
+                                duration: 4,
+                                repeat: Infinity,
+                                repeatType: "reverse",
+                                ease: "easeInOut",
+                            }}
                         >
                             <motion.div
                                 className="relative h-full p-8 rounded-3xl backdrop-blur-xl border overflow-hidden"
                                 style={{
                                     background: "linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
                                     borderColor: feature.border,
+                                    perspective: "1000px",
                                 }}
                                 whileHover={{
-                                    y: -10,
-                                    boxShadow: `0 20px 60px ${feature.glow}`,
-                                    borderColor: feature.accentColor + "66",
+                                    y: -15,
+                                    rotateX: 5,
+                                    rotateY: -5,
+                                    scale: 1.02,
+                                    boxShadow: `0 25px 60px ${feature.glow}`,
+                                    borderColor: feature.accentColor + "99",
                                 }}
-                                transition={{ duration: 0.4 }}
+                                transition={{ type: "spring", stiffness: 300, damping: 20 }}
                             >
-                                {/* Background glow on hover */}
-                                <div
-                                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-3xl"
+                                {/* Y-Travel Scanning Beam */}
+                                <motion.div
+                                    className="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none"
                                     style={{
-                                        background: `radial-gradient(circle at top left, ${feature.glow}, transparent 60%)`,
+                                        background: `linear-gradient(to bottom, transparent, ${feature.accentColor}, transparent)`,
+                                        height: '40%',
+                                        filter: 'blur(30px)',
+                                        zIndex: 1,
+                                    }}
+                                    animate={{
+                                        y: ["-100%", "250%"]
+                                    }}
+                                    transition={{
+                                        duration: 2.5,
+                                        repeat: Infinity,
+                                        ease: "linear"
                                     }}
                                 />
 

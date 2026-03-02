@@ -7,46 +7,45 @@ const steps = [
     title: "Choose Your Project",
     description: "Browse our curated list or request a custom project tailored to your domain and requirements.",
     step: "01",
-    color: "#00E5FF",
+    color: "#92dbe0",
   },
   {
     icon: Code2,
     title: "We Develop & Deliver",
     description: "Our expert team builds your project with clean, well-structured code and on-time delivery.",
     step: "02",
-    color: "#7C3AED",
+    color: "#0b7bff",
   },
   {
     icon: Brain,
     title: "AI Explains & Generates Docs",
     description: "Our AI breaks down every line of code and auto-generates your full report, diagrams, and PPT.",
     step: "03",
-    color: "#a78bfa",
+    color: "#3865cf",
   },
   {
     icon: Mic2,
     title: "Practice Viva",
     description: "Use our AI Viva Mentor to simulate real sessions. Ask anything and get confident, accurate answers.",
     step: "04",
-    color: "#34D399",
+    color: "#0b7bff",
   },
   {
     icon: GraduationCap,
     title: "Submit With Confidence",
     description: "Walk into your viva fully prepared, documentation ready, and understanding your project inside-out.",
     step: "05",
-    color: "#00E5FF",
+    color: "#92dbe0",
   },
 ];
 
 export function Process() {
   return (
-    <section id="process" className="relative py-24 px-6 overflow-hidden">
-      <div className="absolute inset-0 bg-[#0B0F19]" />
+    <section id="process" className="relative py-24 px-6 overflow-hidden bg-transparent">
       <div
         className="absolute top-0 right-1/4 w-96 h-96 rounded-full opacity-10"
         style={{
-          background: "radial-gradient(circle, #7C3AED 0%, transparent 70%)",
+          background: "radial-gradient(circle, #0b7bff 0%, transparent 70%)",
           filter: "blur(100px)",
         }}
       />
@@ -55,22 +54,22 @@ export function Process() {
         {/* Header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.8 }}
         >
           <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#a78bfa]/25 mb-6"
-            style={{ background: "rgba(167, 139, 250, 0.06)" }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#0b7bff]/25 mb-6"
+            style={{ background: "rgba(11, 123, 255, 0.06)" }}
           >
-            <GraduationCap className="w-4 h-4 text-[#a78bfa]" />
-            <span className="text-sm text-[#a78bfa] font-semibold">Your Journey to Success</span>
+            <GraduationCap className="w-4 h-4 text-[#0b7bff]" />
+            <span className="text-sm text-[#0b7bff] font-semibold">Your Journey to Success</span>
           </div>
           <h2
             className="text-4xl sm:text-5xl md:text-6xl mb-4"
             style={{
-              background: "linear-gradient(135deg, #ffffff 0%, #00E5FF 100%)",
+              background: "linear-gradient(135deg, #ffffff 0%, #0b7bff 50%, #92dbe0 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -91,12 +90,12 @@ export function Process() {
             <motion.div
               className="w-full h-full"
               style={{
-                background: "linear-gradient(180deg, #00E5FF, #7C3AED, #a78bfa, #34D399, #00E5FF)",
+                background: "linear-gradient(180deg, #92dbe0, #0b7bff, #3865cf, #0b7bff, #92dbe0)",
               }}
               initial={{ scaleY: 0, originY: 0 }}
               whileInView={{ scaleY: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 2, ease: "easeOut" }}
+              viewport={{ once: false }}
+              transition={{ duration: 1.5, ease: "easeOut" }}
             />
           </div>
 
@@ -105,10 +104,19 @@ export function Process() {
               <motion.div
                 key={step.title}
                 className={`relative flex items-center gap-8 ${index % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"}`}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.12 }}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40, scale: 0.9, filter: "blur(5px)" }}
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                  transition: {
+                    duration: 0.8,
+                    delay: index * 0.1,
+                    ease: "easeOut"
+                  }
+                }}
+                viewport={{ once: false, amount: 0.2 }}
               >
                 {/* Step Icon — center on desktop */}
                 <div className="hidden sm:flex absolute left-1/2 -translate-x-1/2 z-10">

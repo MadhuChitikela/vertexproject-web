@@ -57,7 +57,7 @@ export function Navbar({ onOpenInquiry }: NavbarProps) {
                   <motion.div
                     className="absolute -bottom-1 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100"
                     style={{
-                      background: "linear-gradient(90deg, #00E5FF, #7C3AED)",
+                      background: "linear-gradient(90deg, #92dbe0, #0b7bff)",
                     }}
                     transition={{ duration: 0.3 }}
                   />
@@ -68,12 +68,12 @@ export function Navbar({ onOpenInquiry }: NavbarProps) {
                 type="button"
                 className="px-6 py-2 rounded-lg text-white font-semibold"
                 style={{
-                  background: "linear-gradient(135deg, #00E5FF, #7C3AED)",
-                  boxShadow: "0 0 20px rgba(0, 229, 255, 0.3)",
+                  background: "linear-gradient(135deg, #0b7bff, #3865cf)",
+                  boxShadow: "0 0 20px rgba(11, 123, 255, 0.3)",
                 }}
                 whileHover={{
                   scale: 1.05,
-                  boxShadow: "0 0 30px rgba(0, 229, 255, 0.5)",
+                  boxShadow: "0 0 30px rgba(11, 123, 255, 0.5)",
                 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onOpenInquiry}
@@ -125,7 +125,7 @@ export function Navbar({ onOpenInquiry }: NavbarProps) {
                 type="button"
                 className="w-full px-6 py-3 rounded-lg text-white font-semibold mt-4"
                 style={{
-                  background: "linear-gradient(135deg, #00E5FF, #7C3AED)",
+                  background: "linear-gradient(135deg, #0b7bff, #3865cf)",
                 }}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}

@@ -25,7 +25,7 @@ export default function App() {
       <div className="fixed inset-0" style={{ zIndex: 0 }}>
         <InteractiveDots
           backgroundColor="#0B0F19"
-          dotColor="#00E5FF"
+          dotColor="#0b7bff"
           gridSpacing={35}
           animationSpeed={0.004}
           removeWaveLine={false}
@@ -33,36 +33,54 @@ export default function App() {
       </div>
 
 
-
-
       {/* Navigation */}
       <Navbar onOpenInquiry={() => setIsInquiryModalOpen(true)} />
 
       {/* Main Content */}
       <main className="relative z-10">
-        {/* Hero — AI-Powered FYP Mastery Platform */}
         <Hero onOpenInquiry={() => setIsInquiryModalOpen(true)} />
 
-        {/* Problem Section — Why Students Struggle */}
-        <ProblemSection />
+        {/* Unified Background Wrapper for Everything after Hero */}
+        <div className="relative">
+          {/* Base Section Background (Gradient + Grid) - GLOBAL CONTINUITY */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19] via-[#0f1421] to-[#0B0F19]" />
 
-        {/* AI Features — Vertex AI Project Assist™ */}
-        <AiFeatures />
+          {/* Animated Grid Overlay */}
+          <div className="fixed inset-0 opacity-[0.15] pointer-events-none">
+            <div
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `
+                  linear-gradient(rgba(146, 219, 224, 0.2) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(11, 123, 255, 0.2) 1px, transparent 1px)
+                `,
+                backgroundSize: "60px 60px",
+              }}
+            />
+          </div>
 
-        {/* Services — Complete Project Ecosystem */}
-        <Services />
+          <div className="relative z-10">
+            <ProblemSection />
 
-        {/* Comparison — Why Students Choose Vertex */}
-        <ComparisonSection />
+            {/* AI Features — Vertex AI Project Assist™ */}
+            <AiFeatures onOpenInquiry={() => setIsInquiryModalOpen(true)} />
 
-        {/* Process — How It Works */}
-        <Process />
+            {/* Services — Complete Project Ecosystem */}
+            <Services onOpenInquiry={() => setIsInquiryModalOpen(true)} />
 
-        {/* Trust / Testimonials */}
-        <Testimonials />
+            {/* Comparison — Why Students Choose Vertex */}
+            <ComparisonSection />
 
-        {/* Final CTA */}
-        <CTA onOpenInquiry={() => setIsInquiryModalOpen(true)} />
+            {/* Process — How It Works */}
+            <Process />
+
+            {/* Trust / Testimonials */}
+            <Testimonials />
+
+            {/* Final CTA */}
+            <CTA onOpenInquiry={() => setIsInquiryModalOpen(true)} />
+          </div>
+        </div>
       </main>
 
       {/* Footer */}

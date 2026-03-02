@@ -7,46 +7,49 @@ const deliverables = [
     title: "Mini Projects",
     description: "Perfect for beginners. Small-scale projects with full code, documentation, and demo support.",
     tags: ["Web Dev", "Python", "Java", "Android"],
-    color: "#00E5FF",
+    color: "#92dbe0",
   },
   {
     icon: Cpu,
     title: "Major Projects",
     description: "In-depth final year projects with advanced architecture, AI integration, and complete IEEE reports.",
     tags: ["ML/AI", "Full Stack", "Cloud", "IEEE Format"],
-    color: "#7C3AED",
+    color: "#0b7bff",
   },
   {
     icon: Wifi,
     title: "IoT & Embedded Systems",
     description: "Hardware-connected solutions using Raspberry Pi, Arduino, and sensor-based data pipelines.",
     tags: ["Arduino", "Raspberry Pi", "ESP32", "Sensors"],
-    color: "#00E5FF",
+    color: "#92dbe0",
   },
   {
     icon: Bot,
     title: "AI & Machine Learning",
     description: "Deep learning, computer vision, NLP, and predictive analytics projects with full explanation.",
     tags: ["TensorFlow", "PyTorch", "NLP", "CV"],
-    color: "#a78bfa",
+    color: "#0b7bff",
   },
   {
     icon: Headphones,
     title: "Full Post-Delivery Support",
     description: "We stay with you until your viva is done. AI mentoring, query support, and revision assistance.",
     tags: ["Viva Prep", "Code Help", "Revisions", "24/7"],
-    color: "#34D399",
+    color: "#3865cf",
   },
 ];
 
-export function Services() {
+interface ServicesProps {
+  onOpenInquiry: () => void;
+}
+
+export function Services({ onOpenInquiry }: ServicesProps) {
   return (
-    <section id="services" className="relative py-24 px-6 overflow-hidden">
-      <div className="absolute inset-0 bg-[#0B0F19]" />
+    <section id="services" className="relative py-24 px-6 overflow-hidden bg-transparent">
       <div
         className="absolute top-1/2 left-0 w-96 h-96 rounded-full opacity-10"
         style={{
-          background: "radial-gradient(circle, #00E5FF 0%, transparent 70%)",
+          background: "radial-gradient(circle, #0b7bff 0%, transparent 70%)",
           filter: "blur(100px)",
         }}
       />
@@ -55,22 +58,22 @@ export function Services() {
         {/* Header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
+          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.8 }}
         >
           <div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#7C3AED]/30 mb-6"
-            style={{ background: "rgba(124, 58, 237, 0.08)" }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#0b7bff]/30 mb-6"
+            style={{ background: "rgba(11, 123, 255, 0.08)" }}
           >
-            <CheckCircle2 className="w-4 h-4 text-[#a78bfa]" />
-            <span className="text-sm text-[#a78bfa] font-semibold">Everything You Need</span>
+            <CheckCircle2 className="w-4 h-4 text-[#0b7bff]" />
+            <span className="text-sm text-[#0b7bff] font-semibold">Everything You Need</span>
           </div>
           <h2
-            className="text-4xl sm:text-5xl md:text-6xl mb-4"
+            className="text-4xl sm:text-5xl md:text-6xl mb-4 leading-tight"
             style={{
-              background: "linear-gradient(135deg, #ffffff 0%, #a78bfa 50%, #00E5FF 100%)",
+              background: "linear-gradient(135deg, #ffffff 0%, #0b7bff 50%, #92dbe0 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -90,27 +93,61 @@ export function Services() {
             <motion.div
               key={item.title}
               className={`group relative ${index === 4 ? "md:col-span-2 lg:col-span-1" : ""}`}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              initial={{ opacity: 0, scale: 0.95, y: 30, filter: "blur(4px)" }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                filter: "blur(0px)",
+                transition: {
+                  duration: 0.8,
+                  delay: index * 0.1,
+                  ease: "easeOut"
+                }
+              }}
+              animate={{
+                y: [0, -6, 0],
+              }}
+              viewport={{ once: false, amount: 0.2 }}
+              transition={{
+                duration: 3.5,
+                repeat: Infinity,
+                repeatType: "reverse",
+                ease: "easeInOut",
+              }}
             >
               <motion.div
                 className="relative h-full p-7 rounded-2xl backdrop-blur-xl border border-white/8 overflow-hidden"
                 style={{
                   background: "linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
+                  perspective: "1000px",
                 }}
                 whileHover={{
-                  y: -6,
-                  borderColor: `${item.color}40`,
-                  boxShadow: `0 15px 50px ${item.color}20`,
+                  y: -12,
+                  rotateX: 4,
+                  rotateY: -4,
+                  scale: 1.025,
+                  borderColor: `${item.color}50`,
+                  boxShadow: `0 20px 50px ${item.color}25`,
                 }}
-                transition={{ duration: 0.3 }}
+                transition={{ type: "spring", stiffness: 350, damping: 25 }}
               >
-                <div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
+                {/* Y-Travel Scanning Beam */}
+                <motion.div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none"
                   style={{
-                    background: `radial-gradient(circle at top left, ${item.color}12, transparent 60%)`,
+                    background: `linear-gradient(to bottom, transparent, ${item.color}, transparent)`,
+                    height: '40%',
+                    filter: 'blur(30px)',
+                    zIndex: 1,
+                  }}
+                  animate={{
+                    y: ["-100%", "250%"]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "linear"
                   }}
                 />
                 <div

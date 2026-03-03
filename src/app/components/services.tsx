@@ -58,8 +58,8 @@ export function Services({ onOpenInquiry }: ServicesProps) {
         {/* Header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.8 }}
         >
@@ -93,12 +93,11 @@ export function Services({ onOpenInquiry }: ServicesProps) {
             <motion.div
               key={item.title}
               className={`group relative ${index === 4 ? "md:col-span-2 lg:col-span-1" : ""}`}
-              initial={{ opacity: 0, scale: 0.95, y: 30, filter: "blur(4px)" }}
+              initial={{ opacity: 0, scale: 0.95, y: 30 }}
               whileInView={{
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                filter: "blur(0px)",
                 transition: {
                   duration: 0.8,
                   delay: index * 0.1,

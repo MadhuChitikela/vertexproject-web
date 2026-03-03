@@ -54,8 +54,8 @@ export function Process() {
         {/* Header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.8 }}
         >
@@ -104,12 +104,11 @@ export function Process() {
               <motion.div
                 key={step.title}
                 className={`relative flex items-center gap-8 ${index % 2 === 0 ? "sm:flex-row" : "sm:flex-row-reverse"}`}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40, scale: 0.9, filter: "blur(5px)" }}
+                initial={{ opacity: 0, x: index % 2 === 0 ? -40 : 40, scale: 0.9 }}
                 whileInView={{
                   opacity: 1,
                   x: 0,
                   scale: 1,
-                  filter: "blur(0px)",
                   transition: {
                     duration: 0.8,
                     delay: index * 0.1,

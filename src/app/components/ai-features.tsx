@@ -84,8 +84,8 @@ export function AiFeatures({ onOpenInquiry }: AiFeaturesProps) {
                 {/* Header */}
                 <motion.div
                     className="text-center mb-16"
-                    initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: false, amount: 0.2 }}
                     transition={{ duration: 0.8 }}
                 >
@@ -136,12 +136,11 @@ export function AiFeatures({ onOpenInquiry }: AiFeaturesProps) {
                         <motion.div
                             key={feature.title}
                             className="group relative"
-                            initial={{ opacity: 0, y: 40, scale: 0.95, filter: "blur(4px)" }}
+                            initial={{ opacity: 0, y: 40, scale: 0.95 }}
                             whileInView={{
                                 opacity: 1,
                                 y: 0,
                                 scale: 1,
-                                filter: "blur(0px)",
                                 transition: {
                                     duration: 0.8,
                                     delay: index * 0.1,

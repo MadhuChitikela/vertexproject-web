@@ -48,8 +48,8 @@ export function ComparisonSection() {
             <div className="relative z-10 max-w-5xl mx-auto">
                 <motion.div
                     className="text-center mb-16"
-                    initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-                    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: false, amount: 0.2 }}
                     transition={{ duration: 0.8 }}
                 >
@@ -85,12 +85,11 @@ export function ComparisonSection() {
                         background: "linear-gradient(135deg, rgba(146,219,224,0.03), rgba(11,123,255,0.03))",
                         boxShadow: "0 0 60px rgba(11, 123, 255, 0.08), 0 0 120px rgba(56, 101, 207, 0.05)",
                     }}
-                    initial={{ opacity: 0, y: 30, scale: 0.98, filter: "blur(4px)" }}
+                    initial={{ opacity: 0, y: 30, scale: 0.98 }}
                     whileInView={{
                         opacity: 1,
                         y: 0,
                         scale: 1,
-                        filter: "blur(0px)",
                     }}
                     viewport={{ once: false, amount: 0.1 }}
                     transition={{ duration: 0.8, ease: "easeOut" }}
@@ -130,11 +129,10 @@ export function ComparisonSection() {
                         <motion.div
                             key={row.feature}
                             className="group grid grid-cols-3 p-5 border-b border-white/5 hover:bg-white/2 transition-colors duration-200"
-                            initial={{ opacity: 0, x: -20, filter: "blur(2px)" }}
+                            initial={{ opacity: 0, x: -20 }}
                             whileInView={{
                                 opacity: 1,
                                 x: 0,
-                                filter: "blur(0px)",
                             }}
                             viewport={{ once: false, amount: 0.2 }}
                             transition={{ duration: 0.5, delay: index * 0.05 }}

@@ -75,11 +75,13 @@ export function Hero({ onOpenInquiry }: HeroProps) {
           timelineRef={timelineRef as React.RefObject<HTMLDivElement>}
           className="flex flex-col text-[12vw] md:text-[8vw] lg:text-[7.5vw] font-black leading-[1.02] tracking-tighter mb-12 drop-shadow-2xl"
         >
-          <span className="text-white [text-shadow:0_4px_20px_rgba(0,0,0,0.6)]">Master Your</span>
+          <span className="text-white [text-shadow:0_4px_20px_rgba(0,0,0,0.6)]">From Idea to</span>
           <span className="bg-gradient-to-r from-[#4da3ff] to-[#1f6fff] bg-clip-text text-transparent filter drop-shadow-md">
-            Final Year Project
+            Implementation
           </span>
-          <span className="text-white [text-shadow:0_4px_20px_rgba(0,0,0,0.6)]">With AI Support</span>
+          <span className="text-white/80 [text-shadow:0_4px_20px_rgba(0,0,0,0.6)] text-[4vw] md:text-[2.5vw] lg:text-[2vw] mt-6 font-medium tracking-normal mb-8">
+            We Build Your Project, You Build Your Future
+          </span>
         </TimelineAnimation>
 
         <div className="flex flex-col lg:flex-row items-start lg:items-center gap-12">

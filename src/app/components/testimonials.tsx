@@ -49,8 +49,8 @@ export function Testimonials() {
         {/* Header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 20, filter: "blur(4px)" }}
-          whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.8 }}
         >
@@ -81,12 +81,11 @@ export function Testimonials() {
         {/* Stats */}
         <motion.div
           className="grid grid-cols-3 gap-4 mb-16 max-w-2xl mx-auto"
-          initial={{ opacity: 0, y: 20, scale: 0.9, filter: "blur(4px)" }}
+          initial={{ opacity: 0, y: 20, scale: 0.9 }}
           whileInView={{
             opacity: 1,
             y: 0,
             scale: 1,
-            filter: "blur(0px)",
           }}
           viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -126,12 +125,11 @@ export function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <motion.div
               key={testimonial.name}
-              initial={{ opacity: 0, y: 30, scale: 0.95, filter: "blur(4px)" }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
               whileInView={{
                 opacity: 1,
                 y: 0,
                 scale: 1,
-                filter: "blur(0px)",
               }}
               viewport={{ once: false, amount: 0.2 }}
               transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}

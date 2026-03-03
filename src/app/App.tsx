@@ -26,7 +26,7 @@ export default function App() {
         <InteractiveDots
           backgroundColor="#0B0F19"
           dotColor="#0b7bff"
-          gridSpacing={35}
+          gridSpacing={45}
           animationSpeed={0.004}
           removeWaveLine={false}
         />

@@ -177,35 +177,52 @@ export function InteractiveDots({
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
 
         const { r: dotR, g: dotG, b: dotB } = hexToRgb(dotColor);
+        const mouseX = mouseRef.current.x;
+        const mouseY = mouseRef.current.y;
+        const time = timeRef.current;
+        const currentRipples = ripples.current;
 
         dotsRef.current.forEach((dot) => {
-            const mouseInfluence = getMouseInfluence(dot.originalX, dot.originalY);
-            const rippleInfluence = getRippleInfluence(
-                dot.originalX,
-                dot.originalY,
-                currentTime
-            );
+            // Inlined getMouseInfluence for performance
+            const dx = dot.originalX - mouseX;
+            const dy = dot.originalY - mouseY;
+            const distanceSq = dx * dx + dy * dy;
+            const maxDistance = 150;
+            const maxDistanceSq = maxDistance * maxDistance;
+
+            let mouseInfluence = 0;
+            if (distanceSq < maxDistanceSq) {
+                mouseInfluence = 1 - Math.sqrt(distanceSq) / maxDistance;
+            }
+
+            // Inlined getRippleInfluence for performance
+            let rippleInfluence = 0;
+            for (let i = 0; i < currentRipples.length; i++) {
+                const ripple = currentRipples[i];
+                const age = currentTime - ripple.time;
+                const maxAge = 3000;
+                if (age < maxAge) {
+                    const rdx = dot.originalX - ripple.x;
+                    const rdy = dot.originalY - ripple.y;
+                    const rdistance = Math.sqrt(rdx * rdx + rdy * rdy);
+                    const rippleRadius = (age / maxAge) * 300;
+                    const rippleWidth = 60;
+                    if (Math.abs(rdistance - rippleRadius) < rippleWidth) {
+                        const rippleStrength = (1 - age / maxAge) * ripple.intensity;
+                        const proximityToRipple = 1 - Math.abs(rdistance - rippleRadius) / rippleWidth;
+                        rippleInfluence += rippleStrength * proximityToRipple;
+                    }
+                }
+            }
+            if (rippleInfluence > 2) rippleInfluence = 2;
+
             const totalInfluence = mouseInfluence + rippleInfluence;
 
-            dot.x = dot.originalX;
-            dot.y = dot.originalY;
-
-            const baseDotSize = 2;
-            const dotSize =
-                baseDotSize +
-                totalInfluence * 6 +
-                Math.sin(timeRef.current + dot.phase) * 0.5;
-
-            const opacity = Math.max(
-                0.3,
-                0.6 +
-                totalInfluence * 0.4 +
-                Math.abs(Math.sin(timeRef.current * 0.5 + dot.phase)) * 0.1
-            );
+            const dotSize = 2 + totalInfluence * 6 + Math.sin(time + dot.phase) * 0.5;
+            const opacity = Math.max(0.3, 0.6 + totalInfluence * 0.4 + Math.abs(Math.sin(time * 0.5 + dot.phase)) * 0.1);
 
             ctx.beginPath();
-            ctx.arc(dot.x, dot.y, dotSize, 0, Math.PI * 2);
-
+            ctx.arc(dot.originalX, dot.originalY, dotSize, 0, 6.283185307179586); // Mat.PI * 2
             ctx.fillStyle = `rgba(${dotR}, ${dotG}, ${dotB}, ${opacity})`;
             ctx.fill();
         });

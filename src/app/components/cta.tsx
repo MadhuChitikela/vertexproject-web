@@ -24,8 +24,8 @@ export function CTA({ onOpenInquiry }: CTAProps) {
           style={{
             background: "linear-gradient(135deg, rgba(146, 219, 224, 0.07), rgba(11, 123, 255, 0.07))",
           }}
-          initial={{ opacity: 0, y: 30, scale: 0.95, filter: "blur(4px)" }}
-          whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: false, amount: 0.2 }}
           transition={{ duration: 0.8 }}
         >

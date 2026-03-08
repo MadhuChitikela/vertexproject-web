@@ -143,7 +143,11 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                 setIsSuccess(true);
             }
         } catch (err: any) {
-            setError(err.message || "An error occurred");
+            let msg = err.message || "An error occurred";
+            if (msg.includes("rate limit")) {
+                msg = "Too many attempts! Please wait about 60 minutes or try a different email address.";
+            }
+            setError(msg);
         } finally {
             setIsLoading(false);
         }

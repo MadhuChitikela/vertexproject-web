@@ -59,9 +59,14 @@ const useFluidCursor = (enabled = true) => {
         const pointers = [];
         pointers.push(new pointerPrototype());
 
-        const { gl, ext } = getWebGLContext(canvas);
+        const contextData = getWebGLContext(canvas);
+        if (!contextData || !contextData.gl) {
+            console.warn('WebGL not supported, fluid cursor disabled');
+            return;
+        }
+        const { gl, ext } = contextData;
 
-        if (!ext.supportLinearFiltering) {
+        if (ext && !ext.supportLinearFiltering) {
             config.DYE_RESOLUTION = 256;
             config.SHADING = false;
         }
@@ -82,6 +87,8 @@ const useFluidCursor = (enabled = true) => {
                     canvas.getContext('webgl', params) ||
                     canvas.getContext('experimental-webgl', params);
 
+            if (!gl) return null;
+
             let halfFloat;
             let supportLinearFiltering;
             if (isWebGL2) {
@@ -96,7 +103,7 @@ const useFluidCursor = (enabled = true) => {
 
             const halfFloatTexType = isWebGL2
                 ? gl.HALF_FLOAT
-                : halfFloat.HALF_FLOAT_OES;
+                : (halfFloat ? halfFloat.HALF_FLOAT_OES : null);
             let formatRGBA;
             let formatRG;
             let formatR;

@@ -228,7 +228,9 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                                     <h3 className="text-xl font-bold text-white">Verification Sent!</h3>
                                                     <p className="text-white/60 text-sm leading-relaxed">
                                                         We've sent a verification link to <span className="text-white font-semibold">{email}</span>.
-                                                        Please check your inbox (and spam folder) to complete your registration.
+                                                    </p>
+                                                    <p className="text-[11px] text-[#0b7bff]/80 italic">
+                                                        Tip: Check your **Spam** or **Promotions** folder if you don't see it.
                                                     </p>
                                                 </div>
                                                 <div className="space-y-3">
@@ -248,7 +250,13 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                                         disabled={isLoading}
                                                         className="w-full text-xs text-white/30 hover:text-white/50 transition-colors disabled:opacity-50"
                                                     >
-                                                        Didn't receive it? Click to resend
+                                                        {isLoading ? "Sending..." : "Didn't receive it? Click to resend"}
+                                                    </button>
+                                                    <button
+                                                        onClick={() => { setIsSuccess(false); setError(null); }}
+                                                        className="w-full text-[10px] text-white/20 hover:text-white/40 transition-colors"
+                                                    >
+                                                        Entered wrong email? Click to edit
                                                     </button>
                                                 </div>
                                             </motion.div>

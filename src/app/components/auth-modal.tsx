@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Mail, Lock, User, Loader2 } from "lucide-react";
+import { X, Mail, Lock, User, Loader2, CheckCircle } from "lucide-react";
 import { supabase } from "../../lib/supabase";
 
 interface AuthModalProps {
@@ -16,11 +16,48 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [fullName, setFullName] = useState("");
+    const [isSuccess, setIsSuccess] = useState(false);
+
+    useEffect(() => {
+        if (!isOpen) {
+            const timer = setTimeout(() => {
+                setIsSuccess(false);
+                setError(null);
+                setPassword("");
+            }, 300);
+            return () => clearTimeout(timer);
+        }
+    }, [isOpen]);
+
+    const validatePassword = (pass: string) => {
+        const minLength = 8;
+        const hasUpper = /[A-Z]/.test(pass);
+        const hasLower = /[a-z]/.test(pass);
+        const hasNumber = /[0-9]/.test(pass);
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pass);
+
+        if (pass.length < minLength) return "Password must be at least 8 characters long";
+        if (!hasUpper) return "Password must contain at least one uppercase letter";
+        if (!hasLower) return "Password must contain at least one lowercase letter";
+        if (!hasNumber) return "Password must contain at least one number";
+        if (!hasSpecial) return "Password must contain at least one special character (@, #, $ etc.)";
+        return null;
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
         setError(null);
+
+        // Validate password for sign-up
+        if (!isLogin) {
+            const passError = validatePassword(password);
+            if (passError) {
+                setError(passError);
+                setIsLoading(false);
+                return;
+            }
+        }
 
         try {
             if (isLogin) {
@@ -29,6 +66,7 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                     password,
                 });
                 if (error) throw error;
+                onOpenChange(false);
             } else {
                 const { error } = await supabase.auth.signUp({
                     email,
@@ -40,9 +78,8 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                     },
                 });
                 if (error) throw error;
-                alert("Please check your email for confirmation link!");
+                setIsSuccess(true);
             }
-            onOpenChange(false);
         } catch (err: any) {
             setError(err.message || "An error occurred");
         } finally {
@@ -99,7 +136,7 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                     <div className="relative z-10 p-8">
                                         <div className="flex justify-between items-center mb-6">
                                             <Dialog.Title className="text-2xl font-bold bg-gradient-to-r from-white to-[#92dbe0] bg-clip-text text-transparent">
-                                                {isLogin ? "Welcome Back" : "Create Account"}
+                                                {isSuccess ? "Verify Email" : isLogin ? "Welcome Back" : "Create Account"}
                                             </Dialog.Title>
                                             <Dialog.Close asChild>
                                                 <button className="p-2 rounded-full hover:bg-white/5 transition-colors text-white/50 hover:text-white">
@@ -108,91 +145,128 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                             </Dialog.Close>
                                         </div>
 
-                                        <form onSubmit={handleSubmit} className="space-y-4">
-                                            {!isLogin && (
+                                        {isSuccess ? (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="text-center space-y-6 py-4"
+                                            >
+                                                <div className="w-20 h-20 bg-[#0b7bff]/10 rounded-full flex items-center justify-center mx-auto border border-[#0b7bff]/20">
+                                                    <CheckCircle className="w-10 h-10 text-[#0b7bff]" />
+                                                </div>
                                                 <div className="space-y-2">
-                                                    <label className="text-sm font-medium text-white/70 ml-1">Full Name</label>
-                                                    <div className="relative">
-                                                        <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
-                                                        <input
-                                                            type="text"
-                                                            required
-                                                            value={fullName}
-                                                            onChange={(e) => setFullName(e.target.value)}
-                                                            className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
-                                                            placeholder="John Doe"
-                                                        />
-                                                    </div>
+                                                    <h3 className="text-xl font-bold text-white">Verification Sent!</h3>
+                                                    <p className="text-white/60 text-sm leading-relaxed">
+                                                        We've sent a verification link to <span className="text-white font-semibold">{email}</span>.
+                                                        Please check your inbox (and spam folder) to complete your registration.
+                                                    </p>
                                                 </div>
-                                            )}
-
-                                            <div className="space-y-2">
-                                                <label className="text-sm font-medium text-white/70 ml-1">Email Address</label>
-                                                <div className="relative">
-                                                    <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
-                                                    <input
-                                                        type="email"
-                                                        required
-                                                        value={email}
-                                                        onChange={(e) => setEmail(e.target.value)}
-                                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
-                                                        placeholder="john@example.com"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div className="space-y-2">
-                                                <label className="text-sm font-medium text-white/70 ml-1">Password</label>
-                                                <div className="relative">
-                                                    <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
-                                                    <input
-                                                        type="password"
-                                                        required
-                                                        value={password}
-                                                        onChange={(e) => setPassword(e.target.value)}
-                                                        className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
-                                                        placeholder="••••••••"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            {error && (
-                                                <p className="text-sm text-red-400 ml-1">{error}</p>
-                                            )}
-
-                                            <motion.button
-                                                type="submit"
-                                                disabled={isLoading}
-                                                className="w-full group px-8 py-4 rounded-xl text-lg font-semibold text-white relative overflow-hidden mt-4 disabled:opacity-50"
-                                                style={{
-                                                    background: "linear-gradient(135deg, #0b7bff, #3865cf)",
-                                                    boxShadow: "0 0 20px rgba(11, 123, 255, 0.3)",
-                                                }}
-                                                whileHover={{ scale: 1.02 }}
-                                                whileTap={{ scale: 0.98 }}
-                                            >
-                                                <span className="relative z-10 flex items-center justify-center gap-2">
-                                                    {isLoading ? (
-                                                        <Loader2 className="w-5 h-5 animate-spin" />
-                                                    ) : (
-                                                        isLogin ? "Sign In" : "Sign Up"
+                                                <motion.button
+                                                    onClick={() => onOpenChange(false)}
+                                                    className="w-full px-8 py-4 rounded-xl text-lg font-semibold text-white mt-4"
+                                                    style={{
+                                                        background: "linear-gradient(135deg, #0b7bff, #3865cf)",
+                                                    }}
+                                                    whileHover={{ scale: 1.02 }}
+                                                    whileTap={{ scale: 0.98 }}
+                                                >
+                                                    Got it, thanks!
+                                                </motion.button>
+                                            </motion.div>
+                                        ) : (
+                                            <>
+                                                <form onSubmit={handleSubmit} className="space-y-4">
+                                                    {!isLogin && (
+                                                        <div className="space-y-2">
+                                                            <label className="text-sm font-medium text-white/70 ml-1">Full Name</label>
+                                                            <div className="relative">
+                                                                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                                                                <input
+                                                                    type="text"
+                                                                    required
+                                                                    value={fullName}
+                                                                    onChange={(e) => setFullName(e.target.value)}
+                                                                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
+                                                                    placeholder="John Doe"
+                                                                />
+                                                            </div>
+                                                        </div>
                                                     )}
-                                                </span>
-                                            </motion.button>
-                                        </form>
 
-                                        <div className="mt-6 text-center">
-                                            <button
-                                                onClick={() => setIsLogin(!isLogin)}
-                                                className="text-sm text-white/50 hover:text-white transition-colors"
-                                            >
-                                                {isLogin ? (
-                                                    <>Don't have an account? <span className="text-[#0b7bff]">Sign Up</span></>
-                                                ) : (
-                                                    <>Already have an account? <span className="text-[#0b7bff]">Sign In</span></>
-                                                )}
-                                            </button>
-                                        </div>
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-medium text-white/70 ml-1">Email Address</label>
+                                                        <div className="relative">
+                                                            <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                                                            <input
+                                                                type="email"
+                                                                required
+                                                                value={email}
+                                                                onChange={(e) => setEmail(e.target.value)}
+                                                                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
+                                                                placeholder="john@example.com"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-medium text-white/70 ml-1">Password</label>
+                                                        <div className="relative">
+                                                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                                                            <input
+                                                                type="password"
+                                                                required
+                                                                value={password}
+                                                                onChange={(e) => setPassword(e.target.value)}
+                                                                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
+                                                                placeholder="••••••••"
+                                                            />
+                                                        </div>
+                                                        {!isLogin && (
+                                                            <p className="text-[10px] text-white/40 ml-1 mt-1">
+                                                                Must have 8+ chars, uppercase, lowercase, number & symbol.
+                                                            </p>
+                                                        )}
+                                                    </div>
+
+                                                    {error && (
+                                                        <p className="text-sm text-red-400 ml-1">{error}</p>
+                                                    )}
+
+                                                    <motion.button
+                                                        type="submit"
+                                                        disabled={isLoading}
+                                                        className="w-full group px-8 py-4 rounded-xl text-lg font-semibold text-white relative overflow-hidden mt-4 disabled:opacity-50"
+                                                        style={{
+                                                            background: "linear-gradient(135deg, #0b7bff, #3865cf)",
+                                                            boxShadow: "0 0 20px rgba(11, 123, 255, 0.3)",
+                                                        }}
+                                                        whileHover={{ scale: 1.02 }}
+                                                        whileTap={{ scale: 0.98 }}
+                                                    >
+                                                        <span className="relative z-10 flex items-center justify-center gap-2">
+                                                            {isLoading ? (
+                                                                <Loader2 className="w-5 h-5 animate-spin" />
+                                                            ) : (
+                                                                isLogin ? "Sign In" : "Sign Up"
+                                                            )}
+                                                        </span>
+                                                    </motion.button>
+                                                </form>
+
+                                                <div className="mt-6 text-center">
+                                                    <button
+                                                        onClick={() => setIsLogin(!isLogin)}
+                                                        className="text-sm text-white/50 hover:text-white transition-colors"
+                                                    >
+                                                        {isLogin ? (
+                                                            <>Don't have an account? <span className="text-[#0b7bff]">Sign Up</span></>
+                                                        ) : (
+                                                            <>Already have an account? <span className="text-[#0b7bff]">Sign In</span></>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                            </>
+                                        )}
                                     </div>
                                 </motion.div>
                             </div>

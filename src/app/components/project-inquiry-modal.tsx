@@ -161,8 +161,12 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                             required: "Name is required",
                                                             maxLength: { value: 15, message: "Maximum 15 characters" },
                                                             validate: (v) => {
-                                                                if (/^\d+$/.test(v)) return "Name cannot be just numbers";
-                                                                if (/(.)\1{4,}/.test(v)) return "Please enter a valid name";
+                                                                if (v.trim().length < 3) return "Name must be at least 3 characters";
+                                                                if (/[0-9]/.test(v)) return "Name cannot contain numbers";
+                                                                if (/[!@#$%^&*(),.?":{}|<>]/.test(v)) return "No special characters allowed";
+                                                                if (!/[aeiouAEIOU]/.test(v)) return "Please enter a meaningful name";
+                                                                if (/(.)\1{3,}/.test(v)) return "Too many repetitive characters";
+                                                                if (v.trim().split(/\s+/).length > 3) return "Please enter a shorter name";
                                                                 return true;
                                                             }
                                                         })}

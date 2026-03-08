@@ -96,6 +96,7 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                         data: {
                             full_name: fullName,
                         },
+                        emailRedirectTo: window.location.origin,
                     },
                 });
                 if (error) throw error;

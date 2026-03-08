@@ -17,13 +17,33 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
     const [password, setPassword] = useState("");
     const [fullName, setFullName] = useState("");
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isVerificationSuccess, setIsVerificationSuccess] = useState(false);
     const [isResettingPassword, setIsResettingPassword] = useState(false);
     const [resetSent, setResetSent] = useState(false);
+
+    useEffect(() => {
+        // Check for verification success in URL
+        const checkVerification = async () => {
+            const hash = window.location.hash;
+            const search = window.location.search;
+
+            // Supabase often appends access_token or type=signup to the URL on success
+            if (hash.includes("access_token") || search.includes("type=signup") || search.includes("verified=true")) {
+                setIsVerificationSuccess(true);
+                // Clean up the URL
+                window.history.replaceState(null, "", window.location.pathname);
+                // Open modal if not open
+                onOpenChange(true);
+            }
+        };
+        checkVerification();
+    }, []);
 
     useEffect(() => {
         if (!isOpen) {
             const timer = setTimeout(() => {
                 setIsSuccess(false);
+                setIsVerificationSuccess(false);
                 setIsResettingPassword(false);
                 setResetSent(false);
                 setError(null);
@@ -178,7 +198,7 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                     <div className="relative z-10 p-8">
                                         <div className="flex justify-between items-center mb-6">
                                             <Dialog.Title className="text-2xl font-bold bg-gradient-to-r from-white to-[#92dbe0] bg-clip-text text-transparent">
-                                                {resetSent ? "Check Email" : isResettingPassword ? "Reset Password" : isSuccess ? "Verify Email" : isLogin ? "Welcome Back" : "Create Account"}
+                                                {resetSent ? "Check Email" : isResettingPassword ? "Reset Password" : isVerificationSuccess ? "Verified!" : isSuccess ? "Verify Email" : isLogin ? "Welcome Back" : "Create Account"}
                                             </Dialog.Title>
                                             <Dialog.Close asChild>
                                                 <button className="p-2 rounded-full hover:bg-white/5 transition-colors text-white/50 hover:text-white">
@@ -213,6 +233,34 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                                     whileTap={{ scale: 0.98 }}
                                                 >
                                                     Back to Login
+                                                </motion.button>
+                                            </motion.div>
+                                        ) : isVerificationSuccess ? (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="text-center space-y-6 py-4"
+                                            >
+                                                <div className="w-20 h-20 bg-green-500/10 rounded-full flex items-center justify-center mx-auto border border-green-500/20">
+                                                    <CheckCircle className="w-10 h-10 text-green-500" />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <h3 className="text-xl font-bold text-white">Verification Successful!</h3>
+                                                    <p className="text-white/60 text-sm leading-relaxed">
+                                                        Your account has been successfully verified. You can now sign in with your email and password.
+                                                    </p>
+                                                </div>
+                                                <motion.button
+                                                    onClick={() => {
+                                                        setIsVerificationSuccess(false);
+                                                        setIsLogin(true);
+                                                    }}
+                                                    className="w-full px-8 py-4 rounded-xl text-lg font-semibold text-white mt-4"
+                                                    style={{ background: "linear-gradient(135deg, #0b7bff, #3865cf)" }}
+                                                    whileHover={{ scale: 1.02 }}
+                                                    whileTap={{ scale: 0.98 }}
+                                                >
+                                                    Continue to Sign In
                                                 </motion.button>
                                             </motion.div>
                                         ) : isSuccess ? (

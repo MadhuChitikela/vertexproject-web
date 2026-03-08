@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Send, CheckCircle2 } from "lucide-react";
+import { X, Send, CheckCircle2, ShieldCheck } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../context/AuthContext";
@@ -203,14 +203,24 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
 
                                                 <div className="grid md:grid-cols-2 gap-5">
                                                     <div className="space-y-2">
-                                                        <label className="text-sm font-medium text-white/70 ml-1">Email Address *</label>
-                                                        <input
-                                                            {...register("email")}
-                                                            readOnly
-                                                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none transition-colors text-white/50 cursor-not-allowed"
-                                                            placeholder="john@example.com"
-                                                        />
-                                                        <p className="text-[10px] text-[#0b7bff] ml-1 opacity-70">Pre-filled from your account</p>
+                                                        <div className="flex justify-between items-center">
+                                                            <label className="text-sm font-medium text-white/70 ml-1">Email Address *</label>
+                                                            {user && (
+                                                                <span className="flex items-center gap-1 text-[10px] bg-[#0b7bff]/10 text-[#0b7bff] px-2 py-0.5 rounded-full border border-[#0b7bff]/20">
+                                                                    <ShieldCheck className="w-3 h-3" />
+                                                                    Verified Identity
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <div className="relative">
+                                                            <input
+                                                                {...register("email")}
+                                                                readOnly
+                                                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none transition-colors text-white/50 cursor-not-allowed select-none"
+                                                                placeholder="john@example.com"
+                                                            />
+                                                        </div>
+                                                        <p className="text-[10px] text-white/30 ml-1">This email is verified and cannot be changed for security.</p>
                                                     </div>
                                                     <div className="space-y-2">
                                                         <label className="text-sm font-medium text-white/70 ml-1">Phone Number *</label>

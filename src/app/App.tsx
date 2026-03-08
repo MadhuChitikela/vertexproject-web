@@ -15,12 +15,13 @@ import { Footer } from "./components/footer";
 import { ProjectInquiryModal } from "./components/project-inquiry-modal";
 import { WhatsAppButton } from "./components/whatsapp-button";
 import { AuthModal } from "./components/auth-modal";
+import { Loader2 } from "lucide-react";
 import { useAuth } from "./context/AuthContext";
 
 export default function App() {
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const isMobile = useMediaQuery("(max-width: 1024px)");
   const isTablet = useMediaQuery("(max-width: 1280px)");
 
@@ -35,6 +36,17 @@ export default function App() {
   // Only run fluid cursor on non-mobile devices
   const shouldRunFluid = !isMobile;
   useFluidCursor(shouldRunFluid);
+
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 bg-[#0B0F19] flex items-center justify-center z-[9999]">
+        <div className="text-center space-y-4">
+          <Loader2 className="w-12 h-12 text-[#0b7bff] animate-spin mx-auto" />
+          <p className="text-white/50 text-sm font-medium animate-pulse tracking-widest uppercase">Initializing Platform...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white overflow-x-hidden scroll-smooth">

@@ -17,17 +17,38 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
     const [password, setPassword] = useState("");
     const [fullName, setFullName] = useState("");
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isResettingPassword, setIsResettingPassword] = useState(false);
+    const [resetSent, setResetSent] = useState(false);
 
     useEffect(() => {
         if (!isOpen) {
             const timer = setTimeout(() => {
                 setIsSuccess(false);
+                setIsResettingPassword(false);
+                setResetSent(false);
                 setError(null);
                 setPassword("");
             }, 300);
             return () => clearTimeout(timer);
         }
     }, [isOpen]);
+
+    const handleResetPassword = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setIsLoading(true);
+        setError(null);
+        try {
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                redirectTo: `${window.location.origin}/reset-password`,
+            });
+            if (error) throw error;
+            setResetSent(true);
+        } catch (err: any) {
+            setError(err.message || "Failed to send reset email");
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     const validatePassword = (pass: string) => {
         const minLength = 8;
@@ -50,7 +71,7 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
         setError(null);
 
         // Validate password for sign-up
-        if (!isLogin) {
+        if (!isLogin && !isResettingPassword) {
             const passError = validatePassword(password);
             if (passError) {
                 setError(passError);
@@ -136,7 +157,7 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                     <div className="relative z-10 p-8">
                                         <div className="flex justify-between items-center mb-6">
                                             <Dialog.Title className="text-2xl font-bold bg-gradient-to-r from-white to-[#92dbe0] bg-clip-text text-transparent">
-                                                {isSuccess ? "Verify Email" : isLogin ? "Welcome Back" : "Create Account"}
+                                                {resetSent ? "Check Email" : isResettingPassword ? "Reset Password" : isSuccess ? "Verify Email" : isLogin ? "Welcome Back" : "Create Account"}
                                             </Dialog.Title>
                                             <Dialog.Close asChild>
                                                 <button className="p-2 rounded-full hover:bg-white/5 transition-colors text-white/50 hover:text-white">
@@ -145,7 +166,35 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                             </Dialog.Close>
                                         </div>
 
-                                        {isSuccess ? (
+                                        {resetSent ? (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                className="text-center space-y-6 py-4"
+                                            >
+                                                <div className="w-20 h-20 bg-[#0b7bff]/10 rounded-full flex items-center justify-center mx-auto border border-[#0b7bff]/20">
+                                                    <Mail className="w-10 h-10 text-[#0b7bff]" />
+                                                </div>
+                                                <div className="space-y-2">
+                                                    <h3 className="text-xl font-bold text-white">Reset Link Sent!</h3>
+                                                    <p className="text-white/60 text-sm leading-relaxed">
+                                                        We've sent a password reset link to <span className="text-white font-semibold">{email}</span>.
+                                                    </p>
+                                                </div>
+                                                <motion.button
+                                                    onClick={() => {
+                                                        setIsResettingPassword(false);
+                                                        setResetSent(false);
+                                                    }}
+                                                    className="w-full px-8 py-4 rounded-xl text-lg font-semibold text-white mt-4"
+                                                    style={{ background: "linear-gradient(135deg, #0b7bff, #3865cf)" }}
+                                                    whileHover={{ scale: 1.02 }}
+                                                    whileTap={{ scale: 0.98 }}
+                                                >
+                                                    Back to Login
+                                                </motion.button>
+                                            </motion.div>
+                                        ) : isSuccess ? (
                                             <motion.div
                                                 initial={{ opacity: 0, y: 10 }}
                                                 animate={{ opacity: 1, y: 0 }}
@@ -175,8 +224,8 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                             </motion.div>
                                         ) : (
                                             <>
-                                                <form onSubmit={handleSubmit} className="space-y-4">
-                                                    {!isLogin && (
+                                                <form onSubmit={isResettingPassword ? handleResetPassword : handleSubmit} className="space-y-4">
+                                                    {!isLogin && !isResettingPassword && (
                                                         <div className="space-y-2">
                                                             <label className="text-sm font-medium text-white/70 ml-1">Full Name</label>
                                                             <div className="relative">
@@ -208,25 +257,38 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                                         </div>
                                                     </div>
 
-                                                    <div className="space-y-2">
-                                                        <label className="text-sm font-medium text-white/70 ml-1">Password</label>
-                                                        <div className="relative">
-                                                            <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
-                                                            <input
-                                                                type="password"
-                                                                required
-                                                                value={password}
-                                                                onChange={(e) => setPassword(e.target.value)}
-                                                                className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
-                                                                placeholder="••••••••"
-                                                            />
+                                                    {!isResettingPassword && (
+                                                        <div className="space-y-2">
+                                                            <div className="flex justify-between items-center">
+                                                                <label className="text-sm font-medium text-white/70 ml-1">Password</label>
+                                                                {isLogin && (
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() => setIsResettingPassword(true)}
+                                                                        className="text-xs text-[#0b7bff] hover:text-[#92dbe0] transition-colors"
+                                                                    >
+                                                                        Forgot Password?
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                            <div className="relative">
+                                                                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30" />
+                                                                <input
+                                                                    type="password"
+                                                                    required
+                                                                    value={password}
+                                                                    onChange={(e) => setPassword(e.target.value)}
+                                                                    className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
+                                                                    placeholder="••••••••"
+                                                                />
+                                                            </div>
+                                                            {!isLogin && (
+                                                                <p className="text-[10px] text-white/40 ml-1 mt-1">
+                                                                    Security: 8+ chars, uppercase, lowercase, number & symbol.
+                                                                </p>
+                                                            )}
                                                         </div>
-                                                        {!isLogin && (
-                                                            <p className="text-[10px] text-white/40 ml-1 mt-1">
-                                                                Must have 8+ chars, uppercase, lowercase, number & symbol.
-                                                            </p>
-                                                        )}
-                                                    </div>
+                                                    )}
 
                                                     {error && (
                                                         <p className="text-sm text-red-400 ml-1">{error}</p>
@@ -247,24 +309,36 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                                             {isLoading ? (
                                                                 <Loader2 className="w-5 h-5 animate-spin" />
                                                             ) : (
-                                                                isLogin ? "Sign In" : "Sign Up"
+                                                                isResettingPassword ? "Send Reset Link" : isLogin ? "Sign In" : "Sign Up"
                                                             )}
                                                         </span>
                                                     </motion.button>
+
+                                                    {isResettingPassword && (
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => setIsResettingPassword(false)}
+                                                            className="w-full text-center text-sm text-white/50 hover:text-white transition-colors"
+                                                        >
+                                                            Back to Login
+                                                        </button>
+                                                    )}
                                                 </form>
 
-                                                <div className="mt-6 text-center">
-                                                    <button
-                                                        onClick={() => setIsLogin(!isLogin)}
-                                                        className="text-sm text-white/50 hover:text-white transition-colors"
-                                                    >
-                                                        {isLogin ? (
-                                                            <>Don't have an account? <span className="text-[#0b7bff]">Sign Up</span></>
-                                                        ) : (
-                                                            <>Already have an account? <span className="text-[#0b7bff]">Sign In</span></>
-                                                        )}
-                                                    </button>
-                                                </div>
+                                                {!isResettingPassword && (
+                                                    <div className="mt-6 text-center">
+                                                        <button
+                                                            onClick={() => setIsLogin(!isLogin)}
+                                                            className="text-sm text-white/50 hover:text-white transition-colors"
+                                                        >
+                                                            {isLogin ? (
+                                                                <>Don't have an account? <span className="text-[#0b7bff]">Sign Up</span></>
+                                                            ) : (
+                                                                <>Already have an account? <span className="text-[#0b7bff]">Sign In</span></>
+                                                            )}
+                                                        </button>
+                                                    </div>
+                                                )}
                                             </>
                                         )}
                                     </div>

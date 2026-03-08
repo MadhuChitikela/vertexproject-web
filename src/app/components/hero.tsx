@@ -4,6 +4,7 @@ import { Bot } from 'lucide-react'
 import { ShaderGradient, ShaderGradientCanvas } from '@shadergradient/react'
 import { TimelineAnimation } from '@/app/components/ui/timeline-animation'
 import { useMediaQuery } from '@/hooks/use-media-query'
+import { useWebGLCheck } from '@/hooks/use-webgl-check'
 
 interface HeroProps {
   onOpenInquiry: () => void;
@@ -12,13 +13,16 @@ interface HeroProps {
 export function Hero({ onOpenInquiry }: HeroProps) {
   const timelineRef = useRef<HTMLDivElement>(null)
   const isMobile = useMediaQuery('(max-width: 1024px)')
+  const isWebGLAvailable = useWebGLCheck()
+
+  const showWebGL = !isMobile && isWebGLAvailable === true;
 
   return (
     <section
       ref={timelineRef}
       className="relative min-h-screen flex flex-col bg-transparent text-white w-full overflow-hidden"
     >
-      {!isMobile ? (
+      {showWebGL ? (
         <Suspense fallback={null}>
           <div className="absolute inset-0 opacity-70 brightness-90">
             <ShaderGradientCanvas

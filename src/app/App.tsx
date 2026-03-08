@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InteractiveDots } from "./components/interactive-dots";
+import { motion } from "motion/react";
 import useFluidCursor from "../hooks/useFluidCursor";
 import { useMediaQuery } from "../hooks/use-media-query";
 import { Navbar } from "./components/navbar";
@@ -37,12 +38,42 @@ export default function App() {
   const shouldRunFluid = !isMobile;
   useFluidCursor(shouldRunFluid);
 
-  if (isLoading) {
+  const [forceShow, setForceShow] = useState(false);
+  const [showBypass, setShowBypass] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowBypass(true), 4000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading && !forceShow) {
     return (
       <div className="fixed inset-0 bg-[#0B0F19] flex items-center justify-center z-[9999]">
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-6 p-4">
           <Loader2 className="w-12 h-12 text-[#0b7bff] animate-spin mx-auto" />
-          <p className="text-white/50 text-sm font-medium animate-pulse tracking-widest uppercase">Initializing Platform...</p>
+          <div className="space-y-2">
+            <p className="text-white/50 text-sm font-medium animate-pulse tracking-widest uppercase">Initializing Platform...</p>
+            {showBypass && (
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                onClick={() => {
+                  window.location.reload();
+                }}
+                className="block mx-auto text-xs text-[#0b7bff] hover:underline mt-4"
+              >
+                Taking too long? Click to refresh
+              </motion.button>
+            )}
+            {showBypass && (
+              <button
+                onClick={() => setForceShow(true)}
+                className="block mx-auto text-[10px] text-white/20 mt-2 hover:text-white/40 transition-colors"
+              >
+                Skip & Enter Anyway (Emergency)
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );

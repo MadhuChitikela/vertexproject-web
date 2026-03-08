@@ -50,6 +50,26 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
         }
     };
 
+    const resendVerification = async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const { error } = await supabase.auth.resend({
+                type: 'signup',
+                email,
+                options: {
+                    emailRedirectTo: window.location.origin,
+                }
+            });
+            if (error) throw error;
+            alert("Verification email resent!");
+        } catch (err: any) {
+            setError(err.message || "Failed to resend verification");
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const validatePassword = (pass: string) => {
         const minLength = 8;
         const hasUpper = /[A-Z]/.test(pass);
@@ -211,17 +231,26 @@ export function AuthModal({ isOpen, onOpenChange }: AuthModalProps) {
                                                         Please check your inbox (and spam folder) to complete your registration.
                                                     </p>
                                                 </div>
-                                                <motion.button
-                                                    onClick={() => onOpenChange(false)}
-                                                    className="w-full px-8 py-4 rounded-xl text-lg font-semibold text-white mt-4"
-                                                    style={{
-                                                        background: "linear-gradient(135deg, #0b7bff, #3865cf)",
-                                                    }}
-                                                    whileHover={{ scale: 1.02 }}
-                                                    whileTap={{ scale: 0.98 }}
-                                                >
-                                                    Got it, thanks!
-                                                </motion.button>
+                                                <div className="space-y-3">
+                                                    <motion.button
+                                                        onClick={() => onOpenChange(false)}
+                                                        className="w-full px-8 py-4 rounded-xl text-lg font-semibold text-white mt-4"
+                                                        style={{
+                                                            background: "linear-gradient(135deg, #0b7bff, #3865cf)",
+                                                        }}
+                                                        whileHover={{ scale: 1.02 }}
+                                                        whileTap={{ scale: 0.98 }}
+                                                    >
+                                                        Got it, thanks!
+                                                    </motion.button>
+                                                    <button
+                                                        onClick={(e) => { e.preventDefault(); resendVerification(); }}
+                                                        disabled={isLoading}
+                                                        className="w-full text-xs text-white/30 hover:text-white/50 transition-colors disabled:opacity-50"
+                                                    >
+                                                        Didn't receive it? Click to resend
+                                                    </button>
+                                                </div>
                                             </motion.div>
                                         ) : (
                                             <>

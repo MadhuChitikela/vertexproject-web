@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from "motion/react";
 import { X, Send, CheckCircle2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { supabase } from "../../lib/supabase";
+import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
 
 interface InquiryFormProps {
     isOpen: boolean;
@@ -23,12 +25,29 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
+    const { user } = useAuth();
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset,
-    } = useForm<FormData>();
+        setValue,
+    } = useForm<FormData>({
+        defaultValues: {
+            email: user?.email || "",
+            fullName: user?.user_metadata?.full_name || "",
+        }
+    });
+
+    // Update form values if user changes or modal opens
+    useEffect(() => {
+        if (isOpen && user) {
+            setValue("email", user.email || "");
+            if (user.user_metadata?.full_name) {
+                setValue("fullName", user.user_metadata.full_name);
+            }
+        }
+    }, [isOpen, user, setValue]);
 
     const onSubmit = async (data: FormData) => {
         // 0. Bot Detection (Honeypot)
@@ -186,17 +205,12 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                     <div className="space-y-2">
                                                         <label className="text-sm font-medium text-white/70 ml-1">Email Address *</label>
                                                         <input
-                                                            {...register("email", {
-                                                                required: "Email is required",
-                                                                pattern: {
-                                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                                                    message: "Invalid email address"
-                                                                }
-                                                            })}
-                                                            className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.email ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
+                                                            {...register("email")}
+                                                            readOnly
+                                                            className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none transition-colors text-white/50 cursor-not-allowed"
                                                             placeholder="john@example.com"
                                                         />
-                                                        {errors.email && <p className="text-xs text-red-400 ml-1">{errors.email.message}</p>}
+                                                        <p className="text-[10px] text-[#0b7bff] ml-1 opacity-70">Pre-filled from your account</p>
                                                     </div>
                                                     <div className="space-y-2">
                                                         <label className="text-sm font-medium text-white/70 ml-1">Phone Number *</label>

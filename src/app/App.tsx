@@ -14,11 +14,23 @@ import { CTA } from "./components/cta";
 import { Footer } from "./components/footer";
 import { ProjectInquiryModal } from "./components/project-inquiry-modal";
 import { WhatsAppButton } from "./components/whatsapp-button";
+import { AuthModal } from "./components/auth-modal";
+import { useAuth } from "./context/AuthContext";
 
 export default function App() {
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const { user } = useAuth();
   const isMobile = useMediaQuery("(max-width: 1024px)");
   const isTablet = useMediaQuery("(max-width: 1280px)");
+
+  const handleOpenInquiry = () => {
+    if (!user) {
+      setIsAuthModalOpen(true);
+    } else {
+      setIsInquiryModalOpen(true);
+    }
+  };
 
   // Only run fluid cursor on non-mobile devices
   const shouldRunFluid = !isMobile;
@@ -41,11 +53,11 @@ export default function App() {
 
 
       {/* Navigation */}
-      <Navbar onOpenInquiry={() => setIsInquiryModalOpen(true)} />
+      <Navbar onOpenInquiry={handleOpenInquiry} onOpenAuth={() => setIsAuthModalOpen(true)} />
 
       {/* Main Content */}
       <main className="relative z-10">
-        <Hero onOpenInquiry={() => setIsInquiryModalOpen(true)} />
+        <Hero onOpenInquiry={handleOpenInquiry} />
 
         {/* Unified Background Wrapper for Everything after Hero */}
         <div className="relative">
@@ -70,10 +82,10 @@ export default function App() {
             <ProblemSection />
 
             {/* AI Features — Vertex AI Project Assist™ */}
-            <AiFeatures onOpenInquiry={() => setIsInquiryModalOpen(true)} />
+            <AiFeatures onOpenInquiry={handleOpenInquiry} />
 
             {/* Services — Complete Project Ecosystem */}
-            <Services onOpenInquiry={() => setIsInquiryModalOpen(true)} />
+            <Services onOpenInquiry={handleOpenInquiry} />
 
             {/* Comparison — Why Students Choose Vertex */}
             <ComparisonSection />
@@ -85,7 +97,7 @@ export default function App() {
             <Testimonials />
 
             {/* Final CTA */}
-            <CTA onOpenInquiry={() => setIsInquiryModalOpen(true)} />
+            <CTA onOpenInquiry={handleOpenInquiry} />
           </div>
         </div>
       </main>
@@ -100,6 +112,12 @@ export default function App() {
       <ProjectInquiryModal
         isOpen={isInquiryModalOpen}
         onOpenChange={setIsInquiryModalOpen}
+      />
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onOpenChange={setIsAuthModalOpen}
       />
     </div>
   );

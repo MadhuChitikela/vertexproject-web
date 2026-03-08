@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Brain, FileText, Mic, CheckCircle2 } from "lucide-react";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const aiFeatures = [
     {
@@ -63,6 +64,7 @@ interface AiFeaturesProps {
 }
 
 export function AiFeatures({ onOpenInquiry }: AiFeaturesProps) {
+    const isMobile = useMediaQuery("(max-width: 1024px)");
     return (
         <section id="ai-features" className="relative py-24 px-6 overflow-hidden bg-transparent">
 
@@ -147,16 +149,16 @@ export function AiFeatures({ onOpenInquiry }: AiFeaturesProps) {
                                     ease: "easeOut"
                                 }
                             }}
-                            animate={{
+                            animate={!isMobile ? {
                                 y: [0, -8, 0],
-                            }}
-                            viewport={{ once: false, amount: 0.2 }}
-                            transition={{
+                            } : {}}
+                            viewport={{ once: true, amount: 0.1 }}
+                            transition={!isMobile ? {
                                 duration: 4,
                                 repeat: Infinity,
                                 repeatType: "reverse",
                                 ease: "easeInOut",
-                            }}
+                            } : {}}
                         >
                             <motion.div
                                 className="relative h-full p-8 rounded-3xl backdrop-blur-xl border overflow-hidden"
@@ -165,34 +167,36 @@ export function AiFeatures({ onOpenInquiry }: AiFeaturesProps) {
                                     borderColor: feature.border,
                                     perspective: "1000px",
                                 }}
-                                whileHover={{
+                                whileHover={!isMobile ? {
                                     y: -15,
                                     rotateX: 5,
                                     rotateY: -5,
                                     scale: 1.02,
                                     boxShadow: `0 25px 60px ${feature.glow}`,
                                     borderColor: feature.accentColor + "99",
-                                }}
+                                } : {}}
                                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                             >
-                                {/* Y-Travel Scanning Beam */}
-                                <motion.div
-                                    className="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none"
-                                    style={{
-                                        background: `linear-gradient(to bottom, transparent, ${feature.accentColor}, transparent)`,
-                                        height: '40%',
-                                        filter: 'blur(30px)',
-                                        zIndex: 1,
-                                    }}
-                                    animate={{
-                                        y: ["-100%", "250%"]
-                                    }}
-                                    transition={{
-                                        duration: 2.5,
-                                        repeat: Infinity,
-                                        ease: "linear"
-                                    }}
-                                />
+                                {/* Y-Travel Scanning Beam - Disabled on Mobile */}
+                                {!isMobile && (
+                                    <motion.div
+                                        className="absolute inset-0 opacity-0 group-hover:opacity-60 transition-opacity duration-300 pointer-events-none"
+                                        style={{
+                                            background: `linear-gradient(to bottom, transparent, ${feature.accentColor}, transparent)`,
+                                            height: '40%',
+                                            filter: 'blur(30px)',
+                                            zIndex: 1,
+                                        }}
+                                        animate={{
+                                            y: ["-100%", "250%"]
+                                        }}
+                                        transition={{
+                                            duration: 2.5,
+                                            repeat: Infinity,
+                                            ease: "linear"
+                                        }}
+                                    />
+                                )}
 
                                 {/* Top gradient bar */}
                                 <div

@@ -11,61 +11,71 @@ interface HeroProps {
 
 export function Hero({ onOpenInquiry }: HeroProps) {
   const timelineRef = useRef<HTMLDivElement>(null)
-  const isMobile = useMediaQuery('(max-width: 768px)')
+  const isMobile = useMediaQuery('(max-width: 1024px)')
 
   return (
     <section
       ref={timelineRef}
       className="relative min-h-screen flex flex-col bg-transparent text-white w-full overflow-hidden"
     >
-      <Suspense fallback={null}>
-        <div className="absolute inset-0 opacity-70 brightness-90">
-          <ShaderGradientCanvas
-            style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100vw',
-              height: '100vh',
-              pointerEvents: 'none',
-            }}
-            pixelDensity={1}
-          >
-            <ShaderGradient
-              animate="on"
-              type="sphere"
-              wireframe={false}
-              shader="defaults"
-              uTime={0}
-              uSpeed={0.3}
-              uStrength={0.3}
-              uDensity={0.8}
-              uFrequency={5.5}
-              uAmplitude={3.2}
-              positionX={-0.1}
-              positionY={0}
-              positionZ={0}
-              rotationX={0}
-              rotationY={130}
-              rotationZ={70}
-              color1="#92dbe0"
-              color2="#0b7bff"
-              color3="#3865cf"
-              reflection={0.4}
-              cAzimuthAngle={270}
-              cPolarAngle={180}
-              cDistance={0.5}
-              cameraZoom={15.1}
-              lightType="env"
-              brightness={0.01}
-              envPreset="city"
-              grain="on"
-              toggleAxis={false}
-              zoomOut={false}
-            />
-          </ShaderGradientCanvas>
-        </div>
-      </Suspense>
+      {!isMobile ? (
+        <Suspense fallback={null}>
+          <div className="absolute inset-0 opacity-70 brightness-90">
+            <ShaderGradientCanvas
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100vw',
+                height: '100vh',
+                pointerEvents: 'none',
+              }}
+              pixelDensity={1}
+            >
+              <ShaderGradient
+                animate="on"
+                type="sphere"
+                wireframe={false}
+                shader="defaults"
+                uTime={0}
+                uSpeed={0.3}
+                uStrength={0.3}
+                uDensity={0.8}
+                uFrequency={5.5}
+                uAmplitude={3.2}
+                positionX={-0.1}
+                positionY={0}
+                positionZ={0}
+                rotationX={0}
+                rotationY={130}
+                rotationZ={70}
+                color1="#92dbe0"
+                color2="#0b7bff"
+                color3="#3865cf"
+                reflection={0.4}
+                cAzimuthAngle={270}
+                cPolarAngle={180}
+                cDistance={0.5}
+                cameraZoom={15.1}
+                lightType="env"
+                brightness={0.01}
+                envPreset="city"
+                grain="on"
+                toggleAxis={false}
+                zoomOut={false}
+              />
+            </ShaderGradientCanvas>
+          </div>
+        </Suspense>
+      ) : (
+        <div
+          className="absolute inset-0 opacity-40"
+          style={{
+            background: 'radial-gradient(circle at 50% 50%, #0b7bff 0%, #0B0F19 100%)',
+            filter: 'blur(100px)'
+          }}
+        />
+      )}
 
       {/* Main Content */}
       <div className="relative z-10 grow flex flex-col justify-center px-8 md:px-24 py-20 pb-32">

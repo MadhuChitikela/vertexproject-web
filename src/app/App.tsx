@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { InteractiveDots } from "./components/interactive-dots";
 import useFluidCursor from "../hooks/useFluidCursor";
+import { useMediaQuery } from "../hooks/use-media-query";
 import { Navbar } from "./components/navbar";
 import { Hero } from "./components/hero";
 import { ProblemSection } from "./components/problem-section";
@@ -16,21 +17,27 @@ import { WhatsAppButton } from "./components/whatsapp-button";
 
 export default function App() {
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
+  const isMobile = useMediaQuery("(max-width: 1024px)");
+  const isTablet = useMediaQuery("(max-width: 1280px)");
 
-  useFluidCursor();
+  // Only run fluid cursor on non-mobile devices
+  const shouldRunFluid = !isMobile;
+  useFluidCursor(shouldRunFluid);
 
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white overflow-x-hidden scroll-smooth">
-      {/* Interactive Dot Grid Background */}
-      <div className="fixed inset-0" style={{ zIndex: 0 }}>
-        <InteractiveDots
-          backgroundColor="#0B0F19"
-          dotColor="#0b7bff"
-          gridSpacing={45}
-          animationSpeed={0.004}
-          removeWaveLine={false}
-        />
-      </div>
+      {/* Interactive Dot Grid Background - Disabled on Mobile for performance */}
+      {!isMobile && (
+        <div className="fixed inset-0" style={{ zIndex: 0 }}>
+          <InteractiveDots
+            backgroundColor="#0B0F19"
+            dotColor="#0b7bff"
+            gridSpacing={isTablet ? 60 : 45}
+            animationSpeed={0.004}
+            removeWaveLine={false}
+          />
+        </div>
+      )}
 
 
       {/* Navigation */}

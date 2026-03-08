@@ -16,6 +16,7 @@ interface FormData {
     phone: string;
     projectTitle: string;
     deliveryTime: number;
+    website?: string; // Honeypot field for bot detection
 }
 
 export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) {
@@ -30,6 +31,21 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
     } = useForm<FormData>();
 
     const onSubmit = async (data: FormData) => {
+        // 0. Bot Detection (Honeypot)
+        if (data.website) {
+            console.warn("Bot detected via honeypot.");
+            setIsSuccess(true); // Pretend success to the bot
+            return;
+        }
+
+        // 1. Throttling (Prevent rapid resubmissions)
+        const lastSubmit = localStorage.getItem('last_inquiry_time');
+        const now = Date.now();
+        if (lastSubmit && now - parseInt(lastSubmit) < 60000) { // 1 minute cooldown
+            alert("Please wait a minute before submitting another inquiry.");
+            return;
+        }
+
         setIsSubmitting(true);
         try {
             // 1. Save to Supabase
@@ -62,6 +78,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
             }
 
             setIsSuccess(true);
+            localStorage.setItem('last_inquiry_time', Date.now().toString());
             reset();
         } catch (error) {
             console.error("Process failed:", error);
@@ -93,7 +110,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                         <Dialog.Content asChild>
                             <div className="fixed inset-0 flex items-center justify-center z-[101] p-4 pointer-events-none">
                                 <motion.div
-                                    className="w-full max-w-lg bg-[#0B0F19] rounded-3xl border border-white/20 overflow-hidden relative pointer-events-auto"
+                                    className="w-full max-w-lg bg-[#0B0F19] rounded-3xl border border-white/20 overflow-hidden relative pointer-events-auto no-cursor-animation"
                                     style={{
                                         boxShadow: "0 0 40px rgba(11, 123, 255, 0.15), 0 0 80px rgba(56, 101, 207, 0.1)",
                                     }}
@@ -140,11 +157,25 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                 <div className="space-y-2">
                                                     <label className="text-sm font-medium text-white/70 ml-1">Full Name *</label>
                                                     <input
-                                                        {...register("fullName", { required: "Name is required" })}
+                                                        {...register("fullName", {
+                                                            required: "Name is required",
+                                                            maxLength: { value: 15, message: "Maximum 15 characters" },
+                                                            validate: (v) => {
+                                                                if (/^\d+$/.test(v)) return "Name cannot be just numbers";
+                                                                if (/(.)\1{4,}/.test(v)) return "Please enter a valid name";
+                                                                return true;
+                                                            }
+                                                        })}
+                                                        maxLength={15}
                                                         className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.fullName ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
-                                                        placeholder="John Doe"
+                                                        placeholder="John Doe (Max 15 chars)"
                                                     />
                                                     {errors.fullName && <p className="text-xs text-red-400 ml-1">{errors.fullName.message}</p>}
+                                                </div>
+
+                                                {/* Honeypot Field - Hidden from humans */}
+                                                <div className="hidden pointer-events-none opacity-0 absolute" aria-hidden="true">
+                                                    <input {...register("website")} tabIndex={-1} autoComplete="off" />
                                                 </div>
 
                                                 <div className="grid md:grid-cols-2 gap-5">
@@ -166,9 +197,20 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                     <div className="space-y-2">
                                                         <label className="text-sm font-medium text-white/70 ml-1">Phone Number *</label>
                                                         <input
-                                                            {...register("phone", { required: "Phone is required" })}
+                                                            type="tel"
+                                                            {...register("phone", {
+                                                                required: "Phone is required",
+                                                                pattern: {
+                                                                    value: /^[6789]\d{9}$/,
+                                                                    message: "Enter a valid 10-digit Indian number"
+                                                                }
+                                                            })}
+                                                            onInput={(e) => {
+                                                                e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
+                                                            }}
                                                             className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.phone ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
-                                                            placeholder="+91 XXXXX XXXXX"
+                                                            placeholder="9XXXXXXXXX"
+                                                            maxLength={10}
                                                         />
                                                         {errors.phone && <p className="text-xs text-red-400 ml-1">{errors.phone.message}</p>}
                                                     </div>
@@ -177,10 +219,18 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                 <div className="space-y-2">
                                                     <label className="text-sm font-medium text-white/70 ml-1">Project Title</label>
                                                     <input
-                                                        {...register("projectTitle")}
+                                                        {...register("projectTitle", {
+                                                            maxLength: { value: 100, message: "Maximum 100 characters" },
+                                                            validate: (v) => {
+                                                                if (v && /(.)\1{6,}/.test(v)) return "Please enter a descriptive project title";
+                                                                return true;
+                                                            }
+                                                        })}
+                                                        maxLength={100}
                                                         className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
                                                         placeholder="e.g. AI-based Attendance System"
                                                     />
+                                                    {errors.projectTitle && <p className="text-xs text-red-400 ml-1">{errors.projectTitle.message}</p>}
                                                 </div>
 
                                                 <div className="space-y-2">
@@ -189,10 +239,11 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                         type="number"
                                                         {...register("deliveryTime", {
                                                             required: "Delivery time is required",
-                                                            min: { value: 1, message: "Minimum 1 day" }
+                                                            min: { value: 1, message: "Minimum 1 day" },
+                                                            max: { value: 365, message: "Maximum 365 days" }
                                                         })}
                                                         className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.deliveryTime ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
-                                                        placeholder="e.g. 7"
+                                                        placeholder="Maximum 365 days"
                                                     />
                                                     {errors.deliveryTime && <p className="text-xs text-red-400 ml-1">{errors.deliveryTime.message}</p>}
                                                 </div>

@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { X, Check, Zap } from "lucide-react";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const comparisonData = [
     {
@@ -35,6 +36,7 @@ const comparisonData = [
 ];
 
 export function ComparisonSection() {
+    const isMobile = useMediaQuery("(max-width: 1024px)");
     return (
         <section id="comparison" className="relative py-24 px-6 overflow-hidden bg-transparent">
             <div
@@ -50,7 +52,7 @@ export function ComparisonSection() {
                     className="text-center mb-16"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: false, amount: 0.2 }}
+                    viewport={{ once: true, amount: 0.1 }}
                     transition={{ duration: 0.8 }}
                 >
                     <div
@@ -91,19 +93,26 @@ export function ComparisonSection() {
                         y: 0,
                         scale: 1,
                     }}
-                    viewport={{ once: false, amount: 0.1 }}
-                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    transition={!isMobile ? {
+                        duration: 3.5,
+                        repeat: Infinity,
+                        repeatType: "reverse",
+                        ease: "easeInOut",
+                    } : {}}
                 >
                     {/* Animated top border */}
-                    <motion.div
-                        className="absolute top-0 left-0 right-0 h-[2px]"
-                        style={{
-                            background: "linear-gradient(90deg, transparent, #92dbe0, #0b7bff, #92dbe0, transparent)",
-                            backgroundSize: "200% 100%",
-                        }}
-                        animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
-                        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-                    />
+                    {!isMobile && (
+                        <motion.div
+                            className="absolute top-0 left-0 right-0 h-[2px]"
+                            style={{
+                                background: "linear-gradient(90deg, transparent, #92dbe0, #0b7bff, #92dbe0, transparent)",
+                                backgroundSize: "200% 100%",
+                            }}
+                            animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                        />
+                    )}
 
                     {/* Header Row */}
                     <div className="grid grid-cols-3 p-5 border-b border-white/8">
@@ -134,7 +143,7 @@ export function ComparisonSection() {
                                 opacity: 1,
                                 x: 0,
                             }}
-                            viewport={{ once: false, amount: 0.2 }}
+                            viewport={{ once: true, amount: 0.1 }}
                             transition={{ duration: 0.5, delay: index * 0.05 }}
                         >
                             {/* Feature Name */}

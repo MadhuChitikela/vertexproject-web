@@ -210,6 +210,7 @@ export function CharacterCursor({
         };
 
         const onTouchMove = (e: TouchEvent) => {
+            if (e.target instanceof Element && (e.target.closest('form') || e.target.closest('.no-cursor-animation'))) return;
             for (let i = 0; i < e.touches.length; i++) {
                 addParticle(
                     e.touches[i].clientX,
@@ -220,6 +221,7 @@ export function CharacterCursor({
         };
 
         const onMouseMove = (e: MouseEvent) => {
+            if (e.target instanceof Element && (e.target.closest('form') || e.target.closest('.no-cursor-animation'))) return;
             const p = propsRef.current;
             if (p.wrapperElement) {
                 const rect = p.wrapperElement.getBoundingClientRect();

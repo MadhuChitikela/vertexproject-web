@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { FolderOpen, Code2, Brain, Mic2, GraduationCap } from "lucide-react";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const steps = [
   {
@@ -40,6 +41,7 @@ const steps = [
 ];
 
 export function Process() {
+  const isMobile = useMediaQuery("(max-width: 1024px)");
   return (
     <section id="process" className="relative py-24 px-6 overflow-hidden bg-transparent">
       <div
@@ -56,7 +58,7 @@ export function Process() {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8 }}
         >
           <div
@@ -94,7 +96,7 @@ export function Process() {
               }}
               initial={{ scaleY: 0, originY: 0 }}
               whileInView={{ scaleY: 1 }}
-              viewport={{ once: false }}
+              viewport={{ once: true }}
               transition={{ duration: 1.5, ease: "easeOut" }}
             />
           </div>
@@ -115,18 +117,18 @@ export function Process() {
                     ease: "easeOut"
                   }
                 }}
-                viewport={{ once: false, amount: 0.2 }}
+                viewport={{ once: true, amount: 0.2 }}
               >
                 {/* Step Icon — center on desktop */}
                 <div className="hidden sm:flex absolute left-1/2 -translate-x-1/2 z-10">
                   <motion.div
-                    className="w-16 h-16 rounded-2xl flex items-center justify-center"
+                    className="w-16 h-16 rounded-2xl flex items-center justify-center transition-all duration-300"
                     style={{
                       background: `linear-gradient(135deg, ${step.color}25, ${step.color}10)`,
                       border: `2px solid ${step.color}60`,
                       boxShadow: `0 0 25px ${step.color}35`,
                     }}
-                    whileHover={{ scale: 1.15, boxShadow: `0 0 45px ${step.color}60` }}
+                    whileHover={!isMobile ? { scale: 1.15, boxShadow: `0 0 45px ${step.color}60` } : {}}
                   >
                     <step.icon className="w-7 h-7" style={{ color: step.color }} />
                   </motion.div>
@@ -135,15 +137,15 @@ export function Process() {
                 {/* Card — alternates sides on desktop */}
                 <div className={`w-full sm:w-5/12 ${index % 2 === 0 ? "sm:text-right sm:pr-4" : "sm:ml-auto sm:text-left sm:pl-4"}`}>
                   <motion.div
-                    className="group p-6 rounded-2xl backdrop-blur-xl border border-white/8 relative overflow-hidden"
+                    className="group p-6 rounded-2xl backdrop-blur-xl border border-white/8 relative overflow-hidden transition-all duration-300"
                     style={{
                       background: "linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
                     }}
-                    whileHover={{
+                    whileHover={!isMobile ? {
                       borderColor: `${step.color}40`,
                       boxShadow: `0 10px 40px ${step.color}20`,
                       y: -4,
-                    }}
+                    } : {}}
                     transition={{ duration: 0.3 }}
                   >
                     {/* Mobile icon */}

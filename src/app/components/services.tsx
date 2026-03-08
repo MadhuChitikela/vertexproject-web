@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Code, Cpu, Wifi, Bot, Headphones, CheckCircle2 } from "lucide-react";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const deliverables = [
   {
@@ -44,6 +45,7 @@ interface ServicesProps {
 }
 
 export function Services({ onOpenInquiry }: ServicesProps) {
+  const isMobile = useMediaQuery("(max-width: 1024px)");
   return (
     <section id="services" className="relative py-24 px-6 overflow-hidden bg-transparent">
       <div
@@ -104,16 +106,16 @@ export function Services({ onOpenInquiry }: ServicesProps) {
                   ease: "easeOut"
                 }
               }}
-              animate={{
+              animate={!isMobile ? {
                 y: [0, -6, 0],
-              }}
-              viewport={{ once: false, amount: 0.2 }}
-              transition={{
+              } : {}}
+              viewport={{ once: true, amount: 0.1 }}
+              transition={!isMobile ? {
                 duration: 3.5,
                 repeat: Infinity,
                 repeatType: "reverse",
                 ease: "easeInOut",
-              }}
+              } : {}}
             >
               <motion.div
                 className="relative h-full p-7 rounded-2xl backdrop-blur-xl border border-white/8 overflow-hidden"
@@ -121,34 +123,36 @@ export function Services({ onOpenInquiry }: ServicesProps) {
                   background: "linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01))",
                   perspective: "1000px",
                 }}
-                whileHover={{
+                whileHover={!isMobile ? {
                   y: -12,
                   rotateX: 4,
                   rotateY: -4,
                   scale: 1.025,
                   borderColor: `${item.color}50`,
                   boxShadow: `0 20px 50px ${item.color}25`,
-                }}
+                } : {}}
                 transition={{ type: "spring", stiffness: 350, damping: 25 }}
               >
-                {/* Y-Travel Scanning Beam */}
-                <motion.div
-                  className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none"
-                  style={{
-                    background: `linear-gradient(to bottom, transparent, ${item.color}, transparent)`,
-                    height: '40%',
-                    filter: 'blur(30px)',
-                    zIndex: 1,
-                  }}
-                  animate={{
-                    y: ["-100%", "250%"]
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                />
+                {/* Y-Travel Scanning Beam - Disabled on Mobile */}
+                {!isMobile && (
+                  <motion.div
+                    className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none"
+                    style={{
+                      background: `linear-gradient(to bottom, transparent, ${item.color}, transparent)`,
+                      height: '40%',
+                      filter: 'blur(30px)',
+                      zIndex: 1,
+                    }}
+                    animate={{
+                      y: ["-100%", "250%"]
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  />
+                )}
                 <div
                   className="absolute top-0 left-0 right-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-t-2xl"
                   style={{

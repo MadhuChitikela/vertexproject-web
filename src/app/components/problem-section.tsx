@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { AlertTriangle, BookX, FileWarning, UserX } from "lucide-react";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const problems = [
     {
@@ -33,6 +34,7 @@ const problems = [
 ];
 
 export function ProblemSection() {
+    const isMobile = useMediaQuery("(max-width: 1024px)");
     return (
         <section id="problems" className="relative py-24 px-6 overflow-hidden bg-transparent -mt-32">
             <div className="absolute inset-0 bg-transparent" />
@@ -94,16 +96,16 @@ export function ProblemSection() {
                                     ease: "easeOut"
                                 }
                             }}
-                            animate={{
+                            animate={!isMobile ? {
                                 y: [0, -6, 0],
-                            }}
-                            viewport={{ once: false, amount: 0.2 }}
-                            transition={{
+                            } : {}}
+                            viewport={{ once: true, amount: 0.1 }}
+                            transition={!isMobile ? {
                                 duration: 3.5,
                                 repeat: Infinity,
                                 repeatType: "reverse",
                                 ease: "easeInOut",
-                            }}
+                            } : {}}
                         >
                             <motion.div
                                 className="relative h-full p-6 rounded-2xl backdrop-blur-xl border border-white/5 overflow-hidden"
@@ -112,34 +114,36 @@ export function ProblemSection() {
                                     borderColor: `${problem.color}22`,
                                     perspective: "1000px",
                                 }}
-                                whileHover={{
+                                whileHover={!isMobile ? {
                                     y: -12,
                                     rotateX: 4,
                                     rotateY: -4,
                                     scale: 1.03,
                                     borderColor: `${problem.color}55`,
                                     boxShadow: `0 20px 50px ${problem.glow}`,
-                                }}
+                                } : {}}
                                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
                             >
-                                {/* Y-Travel Scanning Beam */}
-                                <motion.div
-                                    className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none"
-                                    style={{
-                                        background: `linear-gradient(to bottom, transparent, ${problem.color}, transparent)`,
-                                        height: '40%',
-                                        filter: 'blur(30px)',
-                                        zIndex: 1,
-                                    }}
-                                    animate={{
-                                        y: ["-100%", "250%"]
-                                    }}
-                                    transition={{
-                                        duration: 3,
-                                        repeat: Infinity,
-                                        ease: "linear"
-                                    }}
-                                />
+                                {/* Y-Travel Scanning Beam - Disabled on Mobile */}
+                                {!isMobile && (
+                                    <motion.div
+                                        className="absolute inset-0 opacity-0 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none"
+                                        style={{
+                                            background: `linear-gradient(to bottom, transparent, ${problem.color}, transparent)`,
+                                            height: '40%',
+                                            filter: 'blur(30px)',
+                                            zIndex: 1,
+                                        }}
+                                        animate={{
+                                            y: ["-100%", "250%"]
+                                        }}
+                                        transition={{
+                                            duration: 3,
+                                            repeat: Infinity,
+                                            ease: "linear"
+                                        }}
+                                    />
+                                )}
 
                                 {/* Top border accent */}
                                 <motion.div

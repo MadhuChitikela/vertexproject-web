@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Star, Quote, Users, Trophy, Calendar } from "lucide-react";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const testimonials = [
   {
@@ -35,6 +36,7 @@ const stats = [
 ];
 
 export function Testimonials() {
+  const isMobile = useMediaQuery("(max-width: 1024px)");
   return (
     <section id="testimonials" className="relative py-24 px-6 overflow-hidden bg-transparent">
       <div
@@ -51,7 +53,7 @@ export function Testimonials() {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: false, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8 }}
         >
           <div
@@ -87,20 +89,20 @@ export function Testimonials() {
             y: 0,
             scale: 1,
           }}
-          viewport={{ once: false, amount: 0.2 }}
+          viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           {stats.map((stat, index) => (
             <motion.div
               key={stat.label}
-              className="text-center p-4 rounded-2xl backdrop-blur-sm border border-white/8"
+              className="text-center p-4 rounded-2xl backdrop-blur-sm border border-white/8 transition-all duration-300"
               style={{
                 background: "linear-gradient(135deg, rgba(146,219,224,0.05), rgba(11,123,255,0.05))",
               }}
-              whileHover={{ scale: 1.05, borderColor: "rgba(11,123,255,0.3)" }}
+              whileHover={!isMobile ? { scale: 1.05, borderColor: "rgba(11,123,255,0.3)" } : {}}
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: false, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
             >
               <stat.icon className="w-5 h-5 mx-auto mb-2 text-[#92dbe0]" />
@@ -131,17 +133,17 @@ export function Testimonials() {
                 y: 0,
                 scale: 1,
               }}
-              viewport={{ once: false, amount: 0.2 }}
+              viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.8, delay: index * 0.1, ease: "easeOut" }}
             >
               <motion.div
-                className="group relative h-full p-7 rounded-2xl border border-white/10 overflow-hidden"
+                className="group relative h-full p-7 rounded-2xl border border-white/10 overflow-hidden transition-all duration-300"
                 style={{
                   background: "linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))",
                   backdropFilter: "blur(20px)",
                   WebkitBackdropFilter: "blur(20px)",
                 }}
-                whileHover={{ y: -8, borderColor: "rgba(146,219,224,0.25)" }}
+                whileHover={!isMobile ? { y: -8, borderColor: "rgba(146,219,224,0.25)" } : {}}
                 transition={{ duration: 0.3 }}
               >
                 {/* Glassmorphism inner glow */}

@@ -1,9 +1,12 @@
 // @ts-nocheck
 import { useEffect } from 'react';
 
-const useFluidCursor = () => {
+const useFluidCursor = (enabled = true) => {
     useEffect(() => {
-        if (typeof window === 'undefined' || typeof document === 'undefined') return;
+        if (!enabled || typeof window === 'undefined' || typeof document === 'undefined') return;
+
+        // Performance optimization: skip for prefers-reduced-motion
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
         let canvas = document.getElementById('fluid');
         if (!canvas) {
@@ -1094,7 +1097,16 @@ const useFluidCursor = () => {
             return radius;
         }
 
+        const isTargetExcluded = (e) => {
+            const target = e.target;
+            if (target instanceof Element) {
+                return target.closest('form') || target.closest('.no-cursor-animation');
+            }
+            return false;
+        };
+
         const handleMouseDown = (e) => {
+            if (isTargetExcluded(e)) return;
             let pointer = pointers[0];
             let posX = scaleByPixelRatio(e.clientX);
             let posY = scaleByPixelRatio(e.clientY);
@@ -1103,6 +1115,7 @@ const useFluidCursor = () => {
         };
 
         const handleMouseMove = (e) => {
+            if (isTargetExcluded(e)) return;
             let pointer = pointers[0];
             let posX = scaleByPixelRatio(e.clientX);
             let posY = scaleByPixelRatio(e.clientY);
@@ -1112,6 +1125,7 @@ const useFluidCursor = () => {
         };
 
         const handleTouchStart = (e) => {
+            if (isTargetExcluded(e)) return;
             const touches = e.targetTouches;
             let pointer = pointers[0];
             for (let i = 0; i < touches.length; i++) {
@@ -1122,6 +1136,7 @@ const useFluidCursor = () => {
         };
 
         const handleTouchMove = (e) => {
+            if (isTargetExcluded(e)) return;
             const touches = e.targetTouches;
             let pointer = pointers[0];
             for (let i = 0; i < touches.length; i++) {

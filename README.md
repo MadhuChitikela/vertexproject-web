@@ -1,112 +1,60 @@
-# Vertex Project - Premium Tech Solutions Website
+# Vertex - Premium "Done-for-You" Project Agency
 
-A cutting-edge, futuristic 3D website design for Vertex Project, a high-end tech solutions company specializing in IEEE projects, AI systems, and custom software development.
+Vertex is a premium, high-end "Done-for-You" project service agency specializing in cutting-edge technology solutions, IEEE projects, and sophisticated AI integrations. This platform showcases our commitment to elite design, authoritative technical expertise, and a seamless client experience.
 
-## 🎨 Design Features
+## ✨ Brand Identity: The "Ink and Gold" Aesthetic
 
-### Brand Identity
-- **Custom Geometric Logo**: SVG-based logo with animated vertex structure and gradient effects
-- **Premium Dark Theme**: Deep space background (#0B0F19) with neon accents
-- **Neon Color Palette**: Electric Blue (#00E5FF) and Neon Purple (#7C3AED)
-- **3D Visual Effects**: Rotating geometric shapes, particle systems, and depth layers
+Vertex has transitioned to a sophisticated "Ink and Gold" palette, representing authority, premium quality, and timeless technical excellence.
 
-### UI Components
+- **Color Palette**: 
+  - **Ink Black** (#1A1814): Deep, authoritative base
+  - **Premium Gold** (#C9A84C): Refined highlight and accent
+  - **Soft Alabaster** (#FAF8F4): Clean, high-contrast background
+- **Typography**: Playfair Display (Serif) for headlines and high-end agency feel.
+- **Iconography**: Minimalist and professional Lucide icons (removing informal emojis).
 
-#### 🏠 Hero Section
-- Bold headline: "Score High. Stress Less."
-- 3D rotating vertex geometry on the right
-- Gradient CTA buttons with glow effects
-- Live statistics display
-- Animated particle background
+## 🎨 Premium Features
 
-#### 💼 Services Section
-- 4 glassmorphism service cards
-- Hover animations with glow borders
-- Feature bullet points
-- Rotating icon containers
-- Services: IEEE Projects, Custom Software, Documentation, Support
+### 🏢 Agency Experience
+- **Premium Navbar**: Sleek, glassmorphism navigation with dynamic scroll states.
+- **Authority Stats**: Highlighting 500+ successful projects and 10+ industry years.
+- **Problem-Agitation-Solution**: A structured approach to demonstrating value.
+- **Transparent Process**: A 4-step "Timeline of Excellence" for project delivery.
 
-#### ⚡ Why Choose Us
-- 6-feature grid layout
-- Animated icons with rotation on hover
-- Stats showcase (500+ projects, 98% success rate)
-- Grid background pattern
-- Radial gradient accents
+### 🛡️ Technical Excellence
+- **AI-Powered Assistance**: Integrated Vertex AI Project Assist™ for real-time guidance.
+- **Secure Infrastructure**: Supabase-backed inquiry systems with advanced validation.
+- **Modern Tech Stack**: React 18, Tailwind CSS 4, and Motion for high-performance interactions.
+- **Fluid Cursor**: Interactive cursor system for enhanced premium feel on desktop.
 
-#### 🔄 Process Section
-- 4-step visual timeline
-- Animated connecting lines
-- Numbered step indicators
-- Icon-based step representation
-- Mobile-responsive layout
+## 🚀 Getting Started
 
-#### 💬 Testimonials
-- 3 student testimonials
-- 5-star rating display
-- Glass card design
-- Hover elevation effects
-- Trust badges (satisfaction, revisions, response time)
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v16+)
+- [pnpm](https://pnpm.io/) or [npm](https://www.npmjs.com/)
 
-#### 📢 CTA Section
-- Large gradient card with animated border
-- Primary and secondary action buttons
-- Contact information display
-- Trust indicators
-- Pulsing glow effects
-
-#### 🦶 Footer
-- Multi-column link sections
-- Social media icons
-- Contact information cards
-- Trust badge
-- Responsive grid layout
-
-### 🎭 Technical Features
-
-#### Animations
-- **Motion/React**: Smooth entrance animations, hover effects, and scroll-triggered reveals
-- **Particle System**: Canvas-based animated background with 80+ particles
-- **3D Transformations**: Rotating geometric shapes with perspective
-- **Gradient Animations**: Flowing color transitions
-
-#### Visual Effects
-- **Glassmorphism**: Backdrop blur with semi-transparent backgrounds
-- **Neon Glow**: Box shadows with gradient colors
-- **Gradient Text**: Clipped background gradients for text
-- **Border Accents**: Animated gradient borders on hover
-
-#### Responsive Design
-- Mobile-first approach
-- Breakpoints: sm, md, lg
-- Collapsible mobile navigation
-- Responsive grid layouts
-
-## 🚀 Tech Stack
-
-- **React 18.3.1**: Component-based UI
-- **TypeScript**: Type-safe development
-- **Tailwind CSS 4**: Utility-first styling
-- **Motion (Framer Motion)**: Advanced animations
-- **Lucide React**: Icon system
-- **Vite**: Fast build tool
-
-## 📦 Installation
-
+### Installation
 ```bash
+# Clone the repository
+git clone https://github.com/MadhuChitikela/vertexproject-web.git
+
 # Install dependencies
 pnpm install
 
-# Start development server
+# Run development server
 pnpm dev
+```
 
-# Build for production
-pnpm build
+### Environment Variables
+Create a `.env` file in the root directory:
+```env
+VITE_SUPABASE_URL=your_project_url
+VITE_SUPABASE_ANON_KEY=your_anon_key
 ```
 
 ## 🗄️ Database Setup (Supabase)
 
-1. Create a new project at [Supabase](https://supabase.com/).
-2. In the SQL Editor, run the following to create the inquiries table:
+Run the following SQL to set up the `project_inquiries` table:
 ```sql
 create table project_inquiries (
   id uuid default gen_random_uuid() primary key,
@@ -126,134 +74,34 @@ create policy "Allow public inserts"
 on project_inquiries for insert
 with check (true);
 ```
-3. Copy your **Project URL** and **Anon Key** from Project Settings > API.
-4. Add them to your `.env` file:
-```env
-VITE_SUPABASE_URL=your_project_url
-VITE_SUPABASE_ANON_KEY=your_anon_key
-```
 
-## 🎯 Component Structure
+## 📦 Component Architecture
 
 ```
 src/
 ├── app/
 │   ├── components/
-│   │   ├── logo.tsx                    # Logo with variants
-│   │   ├── navbar.tsx                  # Fixed navigation
-│   │   ├── particle-background.tsx     # Animated particles
-│   │   ├── floating-geometry.tsx       # 3D rotating shapes
-│   │   ├── hero.tsx                    # Hero section
-│   │   ├── services.tsx                # Service cards
-│   │   ├── why-choose-us.tsx          # Features grid
-│   │   ├── process.tsx                 # Timeline
-│   │   ├── testimonials.tsx            # Reviews
-│   │   ├── cta.tsx                     # Call to action
-│   │   └── footer.tsx                  # Footer
-│   └── App.tsx                         # Main app
+│   │   ├── premium/            # New refined agency components
+│   │   │   ├── PremiumNavbar.tsx
+│   │   │   ├── PremiumHero.tsx
+│   │   │   ├── PremiumStatsBar.tsx
+│   │   │   ├── PremiumProcess.tsx
+│   │   │   └── ...
+│   │   ├── ai-assistant-button.tsx
+│   │   └── project-inquiry-modal.tsx
+│   └── App.tsx                 # Core layout & logic
 └── styles/
-    ├── index.css                       # Global styles
-    ├── theme.css                       # Design tokens
-    └── fonts.css                       # Font imports
+    ├── index.css               # Global Tailwind styles
+    └── vertex-premium.css      # Custom "Ink and Gold" design tokens
 ```
 
-## 🎨 Logo Usage
+## 📊 Design Philosophy
 
-```tsx
-import { Logo } from "./components/logo";
-
-// Icon only
-<Logo variant="icon" size="md" />
-
-// Horizontal (default)
-<Logo variant="horizontal" size="sm" />
-
-// Full/stacked
-<Logo variant="full" size="lg" />
-
-// Without animation
-<Logo variant="horizontal" animated={false} />
-```
-
-## 🌈 Brand Colors
-
-```css
-/* Primary Colors */
---vertex-dark: #0B0F19;      /* Background */
---vertex-blue: #00E5FF;       /* Electric Blue */
---vertex-purple: #7C3AED;     /* Neon Purple */
-
-/* Gradients */
-background: linear-gradient(135deg, #00E5FF, #7C3AED);
-```
-
-## ✨ Key Features
-
-- ✅ Fully responsive design
-- ✅ Smooth scroll animations
-- ✅ 3D rotating geometry
-- ✅ Interactive particle system
-- ✅ Glassmorphism UI cards
-- ✅ Neon glow effects
-- ✅ Custom scrollbar styling
-- ✅ Mobile navigation menu
-- ✅ Gradient text effects
-- ✅ Professional typography
-
-## 🎬 Animation Details
-
-- **Entrance Animations**: Fade + slide with stagger delays
-- **Hover Effects**: Scale, glow enhancement, rotation
-- **Scroll Reveals**: Viewport-triggered animations
-- **Background**: Continuous particle movement
-- **3D Objects**: 20-second rotation cycles
-
-## 📱 Responsive Breakpoints
-
-- **Mobile**: < 768px
-- **Tablet**: 768px - 1024px
-- **Desktop**: > 1024px
-
-## 🔧 Customization
-
-### Change Brand Colors
-Edit `/src/styles/theme.css`:
-```css
---vertex-blue: #YOUR_COLOR;
---vertex-purple: #YOUR_COLOR;
-```
-
-### Modify Logo
-Edit `/src/app/components/logo.tsx` SVG paths and gradients
-
-### Adjust Animations
-Modify duration and delays in component files using Motion's transition props
-
-## 📄 Documentation
-
-See `BRAND_GUIDE.md` for complete brand identity guidelines, logo specifications, and usage rules.
-
-## 🎯 Design Philosophy
-
-The Vertex Project website embodies:
-1. **Premium Quality**: High-end SaaS-level design
-2. **Tech Innovation**: 3D effects and modern interactions
-3. **Trust & Credibility**: Professional layout and testimonials
-4. **Performance**: Optimized animations and lazy loading
-5. **Accessibility**: Semantic HTML and ARIA labels
-
-## 📊 Performance
-
-- Lightweight animations using CSS transforms
-- Optimized particle count for smooth 60fps
-- SVG-based logo for scalability
-- Lazy-loaded components
-- Efficient gradient rendering
-
-## 🌟 Credits
-
-Built with modern web technologies for a premium futuristic experience.
+1. **Authority**: Every element speaks to professional expertise.
+2. **Minimalism**: Removing clutter to focus on impact and quality.
+3. **Professionalism**: Professional iconography and type systems.
+4. **Agility**: High-performance animations and responsive layouts.
 
 ---
 
-**Vertex Project** - Score High. Stress Less. 🚀
+**Vertex** - Elevating Technological Projects with Unmatched Excellence. 🖋️✨

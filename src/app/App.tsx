@@ -1,25 +1,25 @@
-import { useState, useEffect } from "react";
-import { InteractiveDots } from "./components/interactive-dots";
-import { motion } from "motion/react";
-import useFluidCursor from "../hooks/useFluidCursor";
+import { useState } from "react";
 import { useMediaQuery } from "../hooks/use-media-query";
-import { Navbar } from "./components/navbar";
-import { Hero } from "./components/hero";
-import { ProblemSection } from "./components/problem-section";
-import { AiFeatures } from "./components/ai-features";
-import { Services } from "./components/services";
-import { ComparisonSection } from "./components/comparison-section";
-import { Process } from "./components/process";
-import { Testimonials } from "./components/testimonials";
-import { CTA } from "./components/cta";
-import { Footer } from "./components/footer";
+import { PremiumNavbar } from "./components/premium/PremiumNavbar";
+import { PremiumHero } from "./components/premium/PremiumHero";
+import { PremiumStatsBar } from "./components/premium/PremiumStatsBar";
+import { PremiumProblemSection } from "./components/premium/PremiumProblemSection";
+import { PremiumAiFeatures } from "./components/premium/PremiumAiFeatures";
+import { PremiumServices } from "./components/premium/PremiumServices";
+import { PremiumWhySection } from "./components/premium/PremiumWhySection";
+import { PremiumProcess } from "./components/premium/PremiumProcess";
+import { PremiumTestimonials } from "./components/premium/PremiumTestimonials";
+import { PremiumCTA } from "./components/premium/PremiumCTA";
+import { PremiumFooter } from "./components/premium/PremiumFooter";
+
 import { ProjectInquiryModal } from "./components/project-inquiry-modal";
 import { WhatsAppButton } from "./components/whatsapp-button";
+import { AiExplanationButton } from "./components/ai-assistant-button";
+import useFluidCursor from "../hooks/useFluidCursor";
 
 export default function App() {
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 1024px)");
-  const isTablet = useMediaQuery("(max-width: 1280px)");
 
   const handleOpenInquiry = () => {
     setIsInquiryModalOpen(true);
@@ -30,76 +30,29 @@ export default function App() {
   useFluidCursor(shouldRunFluid);
 
   return (
-    <div className="min-h-screen bg-[#0B0F19] text-white overflow-x-hidden scroll-smooth">
-      {/* Interactive Dot Grid Background - Disabled on Mobile for performance */}
-      {!isMobile && (
-        <div className="fixed inset-0" style={{ zIndex: 0 }}>
-          <InteractiveDots
-            backgroundColor="#0B0F19"
-            dotColor="#0b7bff"
-            gridSpacing={isTablet ? 60 : 45}
-            animationSpeed={0.004}
-            removeWaveLine={false}
-          />
-        </div>
-      )}
-
-
+    <div className="min-h-screen bg-[#FAF8F4] text-[#1A1814] overflow-x-hidden scroll-smooth">
       {/* Navigation */}
-      <Navbar onOpenInquiry={handleOpenInquiry} />
+      <PremiumNavbar onOpenInquiry={handleOpenInquiry} />
 
       {/* Main Content */}
-      <main className="relative z-10">
-        <Hero onOpenInquiry={handleOpenInquiry} />
-
-        {/* Unified Background Wrapper for Everything after Hero */}
-        <div className="relative">
-          {/* Base Section Background (Gradient + Grid) - GLOBAL CONTINUITY */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0B0F19] via-[#0f1421] to-[#0B0F19]" />
-
-          {/* Animated Grid Overlay */}
-          <div className="fixed inset-0 opacity-[0.15] pointer-events-none">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage: `
-                  linear-gradient(rgba(146, 219, 224, 0.2) 1px, transparent 1px),
-                  linear-gradient(90deg, rgba(11, 123, 255, 0.2) 1px, transparent 1px)
-                `,
-                backgroundSize: "60px 60px",
-              }}
-            />
-          </div>
-
-          <div className="relative z-10">
-            <ProblemSection />
-
-            {/* AI Features — Vertex AI Project Assist™ */}
-            <AiFeatures onOpenInquiry={handleOpenInquiry} />
-
-            {/* Services — Complete Project Ecosystem */}
-            <Services onOpenInquiry={handleOpenInquiry} />
-
-            {/* Comparison — Why Students Choose Vertex */}
-            <ComparisonSection />
-
-            {/* Process — How It Works */}
-            <Process />
-
-            {/* Trust / Testimonials */}
-            <Testimonials />
-
-            {/* Final CTA */}
-            <CTA onOpenInquiry={handleOpenInquiry} />
-          </div>
-        </div>
+      <main>
+        <PremiumHero onOpenInquiry={handleOpenInquiry} />
+        <PremiumStatsBar />
+        <PremiumProblemSection />
+        <PremiumAiFeatures />
+        <PremiumServices />
+        <PremiumWhySection />
+        <PremiumProcess />
+        <PremiumTestimonials />
+        <PremiumCTA onOpenInquiry={handleOpenInquiry} />
       </main>
 
       {/* Footer */}
-      <Footer />
+      <PremiumFooter />
 
-      {/* Floating WhatsApp Button */}
+      {/* Floating Buttons */}
       <WhatsAppButton />
+      <AiExplanationButton />
 
       {/* Project Inquiry Modal */}
       <ProjectInquiryModal

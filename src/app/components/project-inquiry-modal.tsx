@@ -101,7 +101,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                     <Dialog.Portal forceMount>
                         <Dialog.Overlay asChild>
                             <motion.div
-                                className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+                                className="fixed inset-0 bg-[#1A1814]/80 backdrop-blur-md z-[100]"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
@@ -110,9 +110,9 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                         <Dialog.Content asChild>
                             <div className="fixed inset-0 flex items-center justify-center z-[101] p-4 pointer-events-none">
                                 <motion.div
-                                    className="w-full max-w-lg bg-[#0B0F19] rounded-3xl border border-white/20 overflow-hidden relative pointer-events-auto no-cursor-animation"
+                                    className="w-full max-w-lg bg-[#1A1814] rounded-3xl border border-[#C9A84C]/20 overflow-hidden relative pointer-events-auto no-cursor-animation"
                                     style={{
-                                        boxShadow: "0 0 40px rgba(11, 123, 255, 0.15), 0 0 80px rgba(56, 101, 207, 0.1)",
+                                        boxShadow: "0 0 40px rgba(201, 168, 76, 0.1), 0 0 80px rgba(26, 24, 20, 0.2)",
                                     }}
                                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                                     animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -123,10 +123,10 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                     <motion.div
                                         className="absolute inset-0 rounded-3xl pointer-events-none"
                                         style={{
-                                            background: "linear-gradient(135deg, #92dbe0, #0b7bff, #92dbe0)",
+                                            background: "linear-gradient(135deg, #C9A84C, #FAF8F4, #C9A84C)",
                                             backgroundSize: "200% 200%",
-                                            padding: "2px",
-                                            opacity: 0.5,
+                                            padding: "1px",
+                                            opacity: 0.3,
                                         }}
                                         animate={{
                                             backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
@@ -137,16 +137,16 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                             ease: "linear",
                                         }}
                                     >
-                                        <div className="w-full h-full bg-[#0B0F19] rounded-[22px]" />
+                                        <div className="w-full h-full bg-[#1A1814] rounded-[22px]" />
                                     </motion.div>
 
                                     <div className="relative z-10 p-8">
                                         <div className="flex justify-between items-center mb-8">
-                                            <Dialog.Title className="text-2xl font-bold bg-gradient-to-r from-white to-[#92dbe0] bg-clip-text text-transparent">
+                                            <Dialog.Title className="text-2xl font-bold bg-gradient-to-r from-white to-[#C9A84C] bg-clip-text text-transparent" style={{ fontFamily: 'Playfair Display, serif' }}>
                                                 Project Inquiry
                                             </Dialog.Title>
                                             <Dialog.Close asChild>
-                                                <button className="p-2 rounded-full hover:bg-white/5 transition-colors text-white/50 hover:text-white">
+                                                <button className="p-2 rounded-full hover:bg-white/5 transition-colors text-white/30 hover:text-white">
                                                     <X className="w-6 h-6" />
                                                 </button>
                                             </Dialog.Close>
@@ -155,7 +155,7 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                         {!isSuccess ? (
                                             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                                                 <div className="space-y-2">
-                                                    <label className="text-sm font-medium text-white/70 ml-1">Full Name *</label>
+                                                    <label className="text-xs font-medium text-[#7A766E] ml-1 uppercase tracking-wider">Full Name *</label>
                                                     <input
                                                         {...register("fullName", {
                                                             required: "Name is required",
@@ -171,10 +171,10 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                             }
                                                         })}
                                                         maxLength={15}
-                                                        className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.fullName ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
-                                                        placeholder="John Doe (Max 15 chars)"
+                                                        className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.fullName ? 'border-red-500/50' : 'border-[#C9A84C]/10'} focus:border-[#C9A84C]/50 focus:outline-none transition-colors text-white placeholder:text-white/10 text-sm`}
+                                                        placeholder="e.g. John Doe"
                                                     />
-                                                    {errors.fullName && <p className="text-xs text-red-400 ml-1">{errors.fullName.message}</p>}
+                                                    {errors.fullName && <p className="text-[10px] text-red-400 ml-1">{errors.fullName.message}</p>}
                                                 </div>
 
                                                 {/* Honeypot Field - Hidden from humans */}
@@ -184,24 +184,22 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
 
                                                 <div className="grid md:grid-cols-2 gap-5">
                                                     <div className="space-y-2">
-                                                        <label className="text-sm font-medium text-white/70 ml-1">Email Address *</label>
-                                                        <div className="relative">
-                                                            <input
-                                                                {...register("email", {
-                                                                    required: "Email is required",
-                                                                    pattern: {
-                                                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                                                        message: "Invalid email address"
-                                                                    }
-                                                                })}
-                                                                className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.email ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
-                                                                placeholder="john@example.com"
-                                                            />
-                                                        </div>
-                                                        {errors.email && <p className="text-xs text-red-400 ml-1">{errors.email.message}</p>}
+                                                        <label className="text-xs font-medium text-[#7A766E] ml-1 uppercase tracking-wider">Email Address *</label>
+                                                        <input
+                                                            {...register("email", {
+                                                                required: "Email is required",
+                                                                pattern: {
+                                                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                                    message: "invalid email address"
+                                                                }
+                                                            })}
+                                                            className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.email ? 'border-red-500/50' : 'border-[#C9A84C]/10'} focus:border-[#C9A84C]/50 focus:outline-none transition-colors text-white placeholder:text-white/10 text-sm`}
+                                                            placeholder="john@example.com"
+                                                        />
+                                                        {errors.email && <p className="text-[10px] text-red-400 ml-1">{errors.email.message}</p>}
                                                     </div>
                                                     <div className="space-y-2">
-                                                        <label className="text-sm font-medium text-white/70 ml-1">Phone Number *</label>
+                                                        <label className="text-xs font-medium text-[#7A766E] ml-1 uppercase tracking-wider">Phone Number *</label>
                                                         <input
                                                             type="tel"
                                                             {...register("phone", {
@@ -214,16 +212,16 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                             onInput={(e) => {
                                                                 e.currentTarget.value = e.currentTarget.value.replace(/[^0-9]/g, '');
                                                             }}
-                                                            className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.phone ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
+                                                            className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.phone ? 'border-red-500/50' : 'border-[#C9A84C]/10'} focus:border-[#C9A84C]/50 focus:outline-none transition-colors text-white placeholder:text-white/10 text-sm`}
                                                             placeholder="9XXXXXXXXX"
                                                             maxLength={10}
                                                         />
-                                                        {errors.phone && <p className="text-xs text-red-400 ml-1">{errors.phone.message}</p>}
+                                                        {errors.phone && <p className="text-[10px] text-red-400 ml-1">{errors.phone.message}</p>}
                                                     </div>
                                                 </div>
 
                                                 <div className="space-y-2">
-                                                    <label className="text-sm font-medium text-white/70 ml-1">Project Title</label>
+                                                    <label className="text-xs font-medium text-[#7A766E] ml-1 uppercase tracking-wider">Project Title</label>
                                                     <input
                                                         {...register("projectTitle", {
                                                             maxLength: { value: 100, message: "Maximum 100 characters" },
@@ -233,14 +231,14 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                             }
                                                         })}
                                                         maxLength={100}
-                                                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20"
+                                                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-[#C9A84C]/10 focus:border-[#C9A84C]/50 focus:outline-none transition-colors text-white placeholder:text-white/10 text-sm"
                                                         placeholder="e.g. AI-based Attendance System"
                                                     />
-                                                    {errors.projectTitle && <p className="text-xs text-red-400 ml-1">{errors.projectTitle.message}</p>}
+                                                    {errors.projectTitle && <p className="text-[10px] text-red-400 ml-1">{errors.projectTitle.message}</p>}
                                                 </div>
 
                                                 <div className="space-y-2">
-                                                    <label className="text-sm font-medium text-white/70 ml-1">Delivery Time (Days) *</label>
+                                                    <label className="text-xs font-medium text-[#7A766E] ml-1 uppercase tracking-wider">Delivery Time (Days) *</label>
                                                     <input
                                                         type="number"
                                                         {...register("deliveryTime", {
@@ -248,21 +246,21 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                             min: { value: 1, message: "Minimum 1 day" },
                                                             max: { value: 365, message: "Maximum 365 days" }
                                                         })}
-                                                        className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.deliveryTime ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
+                                                        className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.deliveryTime ? 'border-red-500/50' : 'border-[#C9A84C]/10'} focus:border-[#C9A84C]/50 focus:outline-none transition-colors text-white placeholder:text-white/10 text-sm`}
                                                         placeholder="Maximum 365 days"
                                                     />
-                                                    {errors.deliveryTime && <p className="text-xs text-red-400 ml-1">{errors.deliveryTime.message}</p>}
+                                                    {errors.deliveryTime && <p className="text-[10px] text-red-400 ml-1">{errors.deliveryTime.message}</p>}
                                                 </div>
 
                                                 <motion.button
                                                     type="submit"
                                                     disabled={isSubmitting}
-                                                    className="w-full group px-8 py-4 rounded-xl text-lg font-semibold text-white relative overflow-hidden mt-4 disabled:opacity-50"
+                                                    className="w-full group px-8 py-4 rounded-xl text-lg font-bold text-[#1A1814] relative overflow-hidden mt-4 disabled:opacity-50"
                                                     style={{
-                                                        background: "linear-gradient(135deg, #0b7bff, #3865cf)",
-                                                        boxShadow: "0 0 20px rgba(11, 123, 255, 0.3)",
+                                                        background: "#C9A84C",
+                                                        boxShadow: "0 10px 20px rgba(201, 168, 76, 0.2)",
                                                     }}
-                                                    whileHover={{ scale: 1.02 }}
+                                                    whileHover={{ scale: 1.02, background: "#D4B96E" }}
                                                     whileTap={{ scale: 0.98 }}
                                                 >
                                                     <span className="relative z-10 flex items-center justify-center gap-2">
@@ -278,11 +276,11 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
                                                 animate={{ opacity: 1, scale: 1 }}
                                             >
                                                 <div className="flex justify-center">
-                                                    <div className="w-20 h-20 rounded-full bg-green-500/10 flex items-center justify-center border border-green-500/20">
-                                                        <CheckCircle2 className="w-10 h-10 text-green-500" />
+                                                    <div className="w-20 h-20 rounded-full bg-[#C9A84C]/10 flex items-center justify-center border border-[#C9A84C]/20">
+                                                        <CheckCircle2 className="w-10 h-10 text-[#C9A84C]" />
                                                     </div>
                                                 </div>
-                                                <h3 className="text-2xl font-bold text-white">Inquiry Sent!</h3>
+                                                <h3 className="text-2xl font-bold text-white" style={{ fontFamily: 'Playfair Display, serif' }}>Inquiry Sent!</h3>
                                                 <p className="text-white/60">Thank you! Our team will contact you shortly.</p>
                                                 <button
                                                     onClick={() => onOpenChange(false)}

@@ -1,11 +1,9 @@
 import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Send, CheckCircle2, ShieldCheck } from "lucide-react";
+import { X, Send, CheckCircle2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { supabase } from "../../lib/supabase";
-import { useAuth } from "../context/AuthContext";
-import { useEffect } from "react";
 
 interface InquiryFormProps {
     isOpen: boolean;
@@ -25,29 +23,12 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
-    const { user } = useAuth();
     const {
         register,
         handleSubmit,
         formState: { errors },
         reset,
-        setValue,
-    } = useForm<FormData>({
-        defaultValues: {
-            email: user?.email || "",
-            fullName: user?.user_metadata?.full_name || "",
-        }
-    });
-
-    // Update form values if user changes or modal opens
-    useEffect(() => {
-        if (isOpen && user) {
-            setValue("email", user.email || "");
-            if (user.user_metadata?.full_name) {
-                setValue("fullName", user.user_metadata.full_name);
-            }
-        }
-    }, [isOpen, user, setValue]);
+    } = useForm<FormData>();
 
     const onSubmit = async (data: FormData) => {
         // 0. Bot Detection (Honeypot)
@@ -203,24 +184,21 @@ export function ProjectInquiryModal({ isOpen, onOpenChange }: InquiryFormProps) 
 
                                                 <div className="grid md:grid-cols-2 gap-5">
                                                     <div className="space-y-2">
-                                                        <div className="flex justify-between items-center">
-                                                            <label className="text-sm font-medium text-white/70 ml-1">Email Address *</label>
-                                                            {user && (
-                                                                <span className="flex items-center gap-1 text-[10px] bg-[#0b7bff]/10 text-[#0b7bff] px-2 py-0.5 rounded-full border border-[#0b7bff]/20">
-                                                                    <ShieldCheck className="w-3 h-3" />
-                                                                    Verified Identity
-                                                                </span>
-                                                            )}
-                                                        </div>
+                                                        <label className="text-sm font-medium text-white/70 ml-1">Email Address *</label>
                                                         <div className="relative">
                                                             <input
-                                                                {...register("email")}
-                                                                readOnly
-                                                                className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none transition-colors text-white/50 cursor-not-allowed select-none"
+                                                                {...register("email", {
+                                                                    required: "Email is required",
+                                                                    pattern: {
+                                                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                                        message: "Invalid email address"
+                                                                    }
+                                                                })}
+                                                                className={`w-full px-4 py-3 rounded-xl bg-white/5 border ${errors.email ? 'border-red-500/50' : 'border-white/10'} focus:border-[#0b7bff]/50 focus:outline-none transition-colors text-white placeholder:text-white/20`}
                                                                 placeholder="john@example.com"
                                                             />
                                                         </div>
-                                                        <p className="text-[10px] text-white/30 ml-1">This email is verified and cannot be changed for security.</p>
+                                                        {errors.email && <p className="text-xs text-red-400 ml-1">{errors.email.message}</p>}
                                                     </div>
                                                     <div className="space-y-2">
                                                         <label className="text-sm font-medium text-white/70 ml-1">Phone Number *</label>

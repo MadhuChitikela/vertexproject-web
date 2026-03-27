@@ -15,69 +15,19 @@ import { CTA } from "./components/cta";
 import { Footer } from "./components/footer";
 import { ProjectInquiryModal } from "./components/project-inquiry-modal";
 import { WhatsAppButton } from "./components/whatsapp-button";
-import { AuthModal } from "./components/auth-modal";
-import { Loader2 } from "lucide-react";
-import { useAuth } from "./context/AuthContext";
 
 export default function App() {
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const { user, isLoading } = useAuth();
   const isMobile = useMediaQuery("(max-width: 1024px)");
   const isTablet = useMediaQuery("(max-width: 1280px)");
 
   const handleOpenInquiry = () => {
-    if (!user) {
-      setIsAuthModalOpen(true);
-    } else {
-      setIsInquiryModalOpen(true);
-    }
+    setIsInquiryModalOpen(true);
   };
 
   // Only run fluid cursor on non-mobile devices
   const shouldRunFluid = !isMobile;
   useFluidCursor(shouldRunFluid);
-
-  const [forceShow, setForceShow] = useState(false);
-  const [showBypass, setShowBypass] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShowBypass(true), 4000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (isLoading && !forceShow) {
-    return (
-      <div className="fixed inset-0 bg-[#0B0F19] flex items-center justify-center z-[9999]">
-        <div className="text-center space-y-6 p-4">
-          <Loader2 className="w-12 h-12 text-[#0b7bff] animate-spin mx-auto" />
-          <div className="space-y-2">
-            <p className="text-white/50 text-sm font-medium animate-pulse tracking-widest uppercase">Initializing Platform...</p>
-            {showBypass && (
-              <motion.button
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                onClick={() => {
-                  window.location.reload();
-                }}
-                className="block mx-auto text-xs text-[#0b7bff] hover:underline mt-4"
-              >
-                Taking too long? Click to refresh
-              </motion.button>
-            )}
-            {showBypass && (
-              <button
-                onClick={() => setForceShow(true)}
-                className="block mx-auto text-[10px] text-white/20 mt-2 hover:text-white/40 transition-colors"
-              >
-                Skip & Enter Anyway (Emergency)
-              </button>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-[#0B0F19] text-white overflow-x-hidden scroll-smooth">
@@ -96,7 +46,7 @@ export default function App() {
 
 
       {/* Navigation */}
-      <Navbar onOpenInquiry={handleOpenInquiry} onOpenAuth={() => setIsAuthModalOpen(true)} />
+      <Navbar onOpenInquiry={handleOpenInquiry} />
 
       {/* Main Content */}
       <main className="relative z-10">
@@ -155,12 +105,6 @@ export default function App() {
       <ProjectInquiryModal
         isOpen={isInquiryModalOpen}
         onOpenChange={setIsInquiryModalOpen}
-      />
-
-      {/* Auth Modal */}
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onOpenChange={setIsAuthModalOpen}
       />
     </div>
   );

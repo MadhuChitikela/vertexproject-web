@@ -93,14 +93,7 @@
     border-radius: 50%;
     pointer-events: none;
   }
-  .hero-premium::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 30%;
-    width: 1px; height: 60%;
-    background: linear-gradient(to bottom, transparent, var(--border), transparent);
-    pointer-events: none;
-  }
+
 
   .hero-eyebrow {
     display: inline-flex; align-items: center; gap: .5rem;
